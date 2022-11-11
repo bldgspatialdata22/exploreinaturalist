@@ -1,0 +1,24 @@
+---
+title: "Project Proposal Feedback"
+author: "Eli Pousson"
+date: 2022-11-11
+format: html
+editor: visual
+---
+
+Your project is off to a great start! Your initial exploration is exactly what I was hoping for with this proposal - just take it a bit farther by converting the observation data into a sf object and starting to make a few more maps and data visualizations.
+
+## Changes I made
+
+-   I set up a data folder and added calls to `readr::write_rds()` to save your downloaded iNaturalist data locally and then `readr::read_rds()` to read it back again When you're working with an API, it is good practice to save data locally if you haven't changed your query so I also added the `eval: false` tag to the chunk where you're downloading the data so it won't run when you render the document.
+-   I spotted one chunk where you were using `dplyr::mutate()` when you clearly intended to use `dplyr::select()`. I corrected the code but I also encourage you to review the [data transformation](https://r4ds.had.co.nz/transform.html) chapter from Wickham and Grolemund for more examples of how to filter and modify the observation attribute data.
+
+## Changes you should make
+
+-   Convert your data frame of observations with coordinates into an sf object using the `sf::st_as_sf()` function passing the name of the coordinate columns to the coords parameter. Load another sf object from a file or using a spatial data access function like `tigris::counties()`. Then try using the `sf::st_filter()` function to filter your data frame of observations by the second sf object. You may need to use `sf::st_transform()` to make sure both objects use the same coordinate reference system. Review the [chapter on spatial data operations](https://geocompr.robinlovelace.net/spatial-operations.html) from Lovelace et al. for more background on `st_filter()` and ideas of other spatial operations you could try.
+-   If you focus on one or two projects, look for more information about how the project is organized, who is promoting the effort and why, and who is participating in the collection of observation data. Instead of framing inconsistencies in the iNaturalist data as a risk for "skewed data analyses" or "extra data cleaning" think about how you can look for traces of the people who collected the data within those inconsistencies. You can also find more technical documentation for [the iNaturalist data here](https://github.com/inaturalist/inaturalist-open-data).
+
+## Things to consider
+
+-   You have a *lot* of data and your questions are still fairly broad. Focusing on data from just 1 or 2 projects or about one genus (or even one common species) could help simplify the process of building an analysis and visualization. I'm intrigued by the prospect of comparing the "research-grade data" from GBIF and the original reports from the iNaturalist API. Could you see what share of reports get tagged as research grade? Is there any interesting spatial distribution to the reports that don't "make the grade"?
+-   Find and read resources and articles from researchers or analysts who are already working with iNaturalist data. This [iNaturalist user journal](https://www.inaturalist.org/journal/tonyrebelo/44352-using-inaturalist-data-for-research) is a good example of the type of resource I'm thinking of. It is always a good idea to learn from experienced data users when you're starting a new project with an unfamiliar source.

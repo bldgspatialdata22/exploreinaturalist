@@ -1,0 +1,42 @@
+---
+title: "Exploring iNaturalist Data: Final Project Proposal"
+author: "Kari Moy"
+format: html
+editor: visual
+---
+
+## Project Proposal
+
+Modern ecological research relies on both historical and current data in order to create informed conservation action plans. While there are many non-profit and government agencies worldwide whose jobs are to compile this research, the rapid changes in climate patterns make these matters increasingly pressing every day. One way to expedite the process of data analysis is to employ citizens who hold a strong interest in their local habitats to aid in data collection.
+
+Citizen science is a concept that was first coined in the mid 90s to describe community participatory research.^1^ This participation manifests in three ways: as subjects, collectors, and consultants. There are many tools for the public to utilize in order to participate in citizen science projects. There is even a US government website devoted to citizen science initiatives.^2^ iNaturalist is another citizen science platform that was created as a Master's thesis project by students at UC Berkeley.^3^ iNaturalist allows amateur naturalists to share ecological observations with other enthusiasts and experts around the world, in order to confirm biological identities. Users can post single observations they are curious about, or join a project with a specific ecological survey goal. The data is all publicly sourced and can be accessed by anyone who creates a free account. iNaturalist data is also accessible through the GBIF (Global Biodiversity Information Facility), which is a free, open-source international network and data structure for biodiversity data funded by the world's governments.^4^ Although all these data are free to access, the question remains--how useful are these data?
+
+Researchers interested in utilizing publicly sourced data may find after a basic exploratory analysis that datasets are missing information, exhibit biases, or hold little intellectual merit. Because iNaturalist is primarily used as a tool to create community around data, certain measures must be taken to filter out unreliable data. Upon initially exploring the iNaturalist data in R, I found that iNaturalist dataframes contain 75 columns, some of which are seemingly arbitrary, but clearly have some sort of data management purpose. I have yet to find documentation for the dataframe structure. In addition, because all data is user reported, the number of observations is variable depending on location, whereas government and academically sanctioned biodiversity inventories generally follow strict site survey guidelines. Inconsistent location data may cause skewed data analyses.
+
+Despite the probability that publicly collected data, like that from iNaturalist, may lead to extra data cleaning and more complicated data analyses, these data are the future of ecological fitness assessments. With global climate change threatening scientists' ability to access global habitats, there is an increasing need to collaborate with researchers online. I propose an exploratory analysis of these publicly accessible data. The following goals should be met with the completion of this project:
+
+1.  Improve skills in data retrieval, data manipulation in R, data visualization in R.
+
+2.  Compare ease of data retrieval from open-source databases, including iNaturalist^5^, GBIF^6^, and iMap.
+
+3.  Begin assessing the completeness, or accuracy, of data publicly-sourced data from iNaturalist. Find comparative measures based on biodiversity counts determined from each database's datasets.
+
+4.  Determine best use of iNaturalist data for research purposes.
+
+5.  Deliver project documentation, data visualization (possibly small multiples)
+
+### References:
+
+^1^Woolley, J. P., McGowan, M. L., Teare, H. J., Coathup, V., Fishman, J. R., Settersten, R. A., Jr, Sterckx, S., Kaye, J., & Juengst, E. T. (2016). Citizen science or scientific citizenship? Disentangling the uses of public engagement rhetoric in national research initiatives. BMC medical ethics, 17(1), 33. <https://doi.org/10.1186/s12910-016-0117-1>
+
+^2^<https://www.citizenscience.gov/#>
+
+^3^<https://www.inaturalist.org/pages/about>
+
+^4^https://www.gbif.org/what-is-gbif
+
+^5^Vijay Barve and Edmund Hart (2022). rinat: Access 'iNaturalist' Data Through APIs. https://docs.ropensci.org/rinat/ (website). https://github.com/ropensci/rinat (devel).
+
+^6^Chamberlain S, Barve V, Mcglinn D, Oldoni D, Desmet P, Geffert L, Ram K (2022). \_rgbif: Interface to the Global Biodiversity Information Facility API\_. R package version 3.7.3.1, \<URL: https://CRAN.Rproject.org/package=rgbif\>.
+
+Chamberlain S, Boettiger C (2017). "R Python, and Ruby clients for GBIF species occurrence data." \_PeerJPrePrints\_. \<URL:https://doi.org/10.7287/peerj.preprints.3304v1\>.
