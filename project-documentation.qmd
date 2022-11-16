@@ -71,17 +71,21 @@ editor: visual
 
 ## Set Up
 
+library(tmap)
+
 ```{r}
 #| label: setup
 # remotes::install_github("ropensci/rinat")
 # remotes::install_github("ropensci/rgbif")
-library(rinat)
-library(rgbif)
-library(tidyverse)
-library(ggplot2)
+library(rinat) #R package to retreive data from iNaturalist database
+library(rgbif) #R package to retreive data from GBIF database
+library(tidyverse) 
+library(ggplot2) #R package for creating plots and maps
+library(spData) #R package for importing US states data
+library(sf) #R package for working with simple features
 ```
 
-## Getting Spatial Data
+### Getting Spatial Data
 
 Use get_inat_obs_project() to get observation data.
 
@@ -93,6 +97,7 @@ Use get_inat_obs_project() to get observation data.
 
 ```{r}
 #| eval: false
+#Get spatial data and save into local data folder
 MD_masternat_piedmont <- get_inat_obs_project("maryland-master-naturalist-program-piedmont-region", type = "observations")
 
 readr::write_rds(MD_masternat_piedmont, here::here("data/MD_masternat_piedmont.rds"))
@@ -103,19 +108,24 @@ readr::write_rds(MD_masternat_coastal, here::here("data/MD_masternat_coastal.rds
 
 MD_biodiversity <- get_inat_obs_project("biodiversity-of-maryland", type = "observations")
 
-readr::write_rds(MD_biodiversity, here::here("data/MD_biodiversity.rds"))
+data("us_states")
+maryland_data <- filter(us_states, NAME == "Maryland")
+
+readr::write_rds(maryland_data, here::here("data/maryland_data.rds"))
 ```
 
+### Read data back into script
 
 ```{r}
 # Read data saved to data folder
 MD_masternat_piedmont <- readr::read_rds(here::here("data/MD_masternat_piedmont.rds"))
 
-MD_masternat_coastal <- readr::write_rds(here::here("data/MD_masternat_coastal.rds"))
+MD_masternat_coastal <- readr::read_rds(here::here("data/MD_masternat_coastal.rds"))
 
 MD_biodiversity <- readr::read_rds(here::here("data/MD_biodiversity.rds"))
-```
 
+maryland_data <- readr::read_rds(here::here("data/maryland_data.rds"))
+```
 
 -   OK -- I can access spatial datasets from iNaturalist using rinat :: get_inat_obs_projct(). However, for projects with more observations I cannot subset data using this function, so it will take a long time to retrieve the full dataset (ei. MD_masternat_piedmont only has 3934 observations, whereas the MD_biodiversity contains over 1 million observations and can only return 10,000 observations due to the limits of iNaturalist's current API.
 
@@ -140,22 +150,75 @@ Is there a list of column descriptions anywhere in the iNaturalist API documenta
 
 -   "id" = unique observation ID
 
+-   "taxon.name" = scientific name
+
 -   "observed_on" = user reported date of observation
 
 -   "description" = user reported qualitative data to help with species ID
 
+-   "place_guess" = name of location
+
 -   "latitude" & "longitude"
 
+-   "quality_grade" = level of confidence of identification; values are: "needs id" or "research"
+
+## Working with iNaturalist Project Data
+
 ```{r}
+#Review column names and column data types
 glimpse(MD_masternat_piedmont)
 colnames(MD_masternat_piedmont)
-# FIXME: You're using mutate() but it looks like you meant to use select() - I commented out your code and provided a sample below showing how to use select()
-# keep_col <- c("id", "observed_on", "description", "latitude", "longitude","")
-# MD_masternat_piedmont_sm <- mutate(MD_masternat_piedmont,keep_col)
-
+#Create new dataframe, filtering out unecessary variables
+#Keep variables that will be useful in further analysis
 MD_masternat_piedmont_sm <- MD_masternat_piedmont %>%
-  select(all_of(c("id", "observed_on", "description", "latitude", "longitude")))
-  
+  select(all_of(c("id", "taxon.name","observed_on", "description", "place_guess", "latitude", "longitude", "quality_grade")))
+#Filter dataframe down to research quality observations
+MD_masternat_piedmont_researchgrade <- filter(MD_masternat_piedmont_sm, quality_grade == "research")
+
+```
+
+### Check data before plotting
+
+```{r}
+#Check coordinate reference system of all data
+st_crs(maryland_data)
+#CRS = "EPSG: 4269"
+st_crs(MD_masternat_coastal)
+#CRS = NA
+st_crs(MD_masternat_piedmont)
+#CRS = NA
+st_crs(MD_biodiversity)
+#CRS = NA
+
+#Convert iNaturalist dataframes into sf objects
+MD_masternat_coastal
+MD_masternat_coastal_sf <- sf::st_as_sf(MD_masternat_coastal, coords = c("latitude", "longitude"))
+MD_masternat_piedmont_sf <-
+MD_biodiversity_sf <-
+
+#Transform iNaturalist data to match maryland_data CRS
+MD_masternat_coastal_std <- 
+  st_transform(MD_masternat_coastal_sf, st_crs(maryland_data))
+MD_masternat_piedmont_std <-
+  st_transform(MD_masternat_piedmont_sf, st_crs(maryland_data))
+MD_masternat_biodiversity_std <-
+  st_transform(MD_masternat_coastal_sf, st_crs(maryland_data))
+```
+
+```{r}
+#Plot research quality data
+#Set up base map
+data("us_states")
+maryland_data <- filter(us_states, NAME == "Maryland")
+maryland_map <-
+  ggplot() +
+  geom_sf(data = maryland_data, color = "black", fill = NA)
+maryland_map
+
+MD_masternat_piedmont_research_map <- 
+  ggplot(MD_masternat_piedmont_researchgrade, mapping = aes (
+    
+  ))
 ```
 
 After further research I have decided that accessing data through GBIF will be a more reliable way to gather data from iNaturalist.
@@ -169,7 +232,6 @@ After further research I have decided that accessing data through GBIF will be a
 # Confirm 2-letter country code for United States
 rgb_country_codes(country_name = "United", fuzzy = FALSE)
 ```
-
 
 ```{r}
 # Recreate data occurance search done on website with the following filters:
