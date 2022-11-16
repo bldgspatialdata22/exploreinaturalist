@@ -191,9 +191,12 @@ st_crs(MD_biodiversity)
 #CRS = NA
 
 #Convert iNaturalist dataframes into sf objects
-MD_masternat_coastal
 MD_masternat_coastal_sf <- sf::st_as_sf(MD_masternat_coastal, coords = c("latitude", "longitude"))
-MD_masternat_piedmont_sf <-
+
+reprex::reprex()
+```
+
+```{MD_masternat_piedmont_sf <-}
 MD_biodiversity_sf <-
 
 #Transform iNaturalist data to match maryland_data CRS
