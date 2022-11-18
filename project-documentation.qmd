@@ -190,10 +190,54 @@ st_crs(MD_masternat_piedmont)
 st_crs(MD_biodiversity)
 #CRS = NA
 
-#Convert iNaturalist dataframes into sf objects
-MD_masternat_coastal_sf <- sf::st_as_sf(MD_masternat_coastal, coords = c("latitude", "longitude"))
+```
 
-reprex::reprex()
+```{r}
+#Prep MD_masternat_coastal data
+#Convert lat/lon columns to numeric type
+MD_masternat_coastal$latitude = as.numeric(as.character(MD_masternat_coastal$latitude)) 
+MD_masternat_coastal$longitude = as.numeric(as.character(MD_masternat_coastal$longitude)) 
+#Check for NAs in lat/lon columns
+costal_na_lat <- which(is.na(MD_masternat_coastal$latitude))
+coastal_na_lon <- which(is.na(MD_masternat_coastal$longitude))
+#Both columns return NA values in rows: 1341, 1342, 1344, 1382
+#Remove rows in dateframe with NA values
+MD_masternat_coastal_drop_na <- MD_masternat_coastal %>% 
+  drop_na(latitude)
+#Convert iNaturalist dataframes into sf objects
+MD_masternat_coastal_sf <- sf::st_as_sf(MD_masternat_coastal_drop_na, coords = c("latitude", "longitude"))
+```
+
+```{r}
+#Repeat aboce steps for MD_masternat_piedmont data
+#Convert lat/lon columns to numeric type
+MD_masternat_piedmont$latitude = as.numeric(as.character(MD_masternat_piedmont$latitude)) 
+MD_masternat_piedmont$longitude = as.numeric(as.character(MD_masternat_piedmont$longitude)) 
+#Check for NAs in lat/lon columns
+piedmont_na_lat <- which(is.na(MD_masternat_piedmont$latitude))
+piedmont_na_lon <- which(is.na(MD_masternat_piedmont$longitude))
+#Both columns return NA values in 100 rows
+#Remove rows in dateframe with NA values
+MD_masternat_piedmont_drop_na <- MD_masternat_coastal %>% 
+  drop_na(latitude)
+#Convert iNaturalist dataframes into sf objects
+MD_masternat_piedmont_sf <- sf::st_as_sf(MD_masternat_piedmont_drop_na, coords = c("latitude", "longitude"))
+```
+
+```{r}
+#Repeat aboce steps for MD_biodiversity data
+#Convert lat/lon columns to numeric type
+MD_biodiversity$latitude = as.numeric(as.character(MD_biodiversity$latitude)) 
+MD_biodiversity$longitude = as.numeric(as.character(MD_biodiversity$longitude)) 
+#Check for NAs in lat/lon columns
+biodiversity_na_lat <- which(is.na(MD_biodiversity$latitude))
+biodiversity_na_lon <- which(is.na(MD_biodiversity$longitude))
+#Both columns return NA values in rows: 1341, 1342, 1344, 1382
+#Remove rows in dateframe with NA values
+MD_biodiversity_drop_na <- MD_biodiversity %>% 
+  drop_na(latitude)
+#Convert iNaturalist dataframes into sf objects
+MD_biodiversity_sf <- sf::st_as_sf(MD_biodiversity_drop_na, coords = c("latitude", "longitude"))
 ```
 
 ```{MD_masternat_piedmont_sf <-}
