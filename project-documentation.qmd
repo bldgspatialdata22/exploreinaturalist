@@ -137,11 +137,11 @@ maryland_data <- readr::read_rds(here::here("data/maryland_data.rds"))
 
 ```{r}
 ## Map 100 spotted salamanders
-a_mac <- get_inat_obs(taxon_name = "Ambystoma maculatum", year = 2021)
-salamander_map <- inat_map(a_mac, plot = FALSE)
+#a_mac <- get_inat_obs(taxon_name = "Ambystoma maculatum", year = 2021)
+#salamander_map <- inat_map(a_mac, plot = FALSE)
 
 ### Further customise the returned ggplot object
-salamander_map + borders("state") + theme_bw()
+#salamander_map + borders("state") + theme_bw()
 ```
 
 Attempting to reduce the number of columns (75) down to a manageable and also relevent number of columns.
@@ -150,7 +150,7 @@ Is there a list of column descriptions anywhere in the iNaturalist API documenta
 
 -   "id" = unique observation ID
 
--   "taxon.name" = scientific name
+-   "taxon.id" or "taxon_id = scientific name
 
 -   "observed_on" = user reported date of observation
 
@@ -164,22 +164,14 @@ Is there a list of column descriptions anywhere in the iNaturalist API documenta
 
 ## Working with iNaturalist Project Data
 
+### Check data before plotting
+
 ```{r}
 #Review column names and column data types
 glimpse(MD_masternat_piedmont)
 colnames(MD_masternat_piedmont)
-#Create new dataframe, filtering out unecessary variables
-#Keep variables that will be useful in further analysis
-MD_masternat_piedmont_sm <- MD_masternat_piedmont %>%
-  select(all_of(c("id", "taxon.name","observed_on", "description", "place_guess", "latitude", "longitude", "quality_grade")))
-#Filter dataframe down to research quality observations
-MD_masternat_piedmont_researchgrade <- filter(MD_masternat_piedmont_sm, quality_grade == "research")
-
-```
-
-### Check data before plotting
-
-```{r}
+#lat/lon data is chr data; needs to be numeric in order to used as geom
+#
 #Check coordinate reference system of all data
 st_crs(maryland_data)
 #CRS = "EPSG: 4269"
@@ -189,8 +181,9 @@ st_crs(MD_masternat_piedmont)
 #CRS = NA
 st_crs(MD_biodiversity)
 #CRS = NA
-
 ```
+
+### Data Cleaning
 
 ```{r}
 #Prep MD_masternat_coastal data
@@ -205,7 +198,7 @@ coastal_na_lon <- which(is.na(MD_masternat_coastal$longitude))
 MD_masternat_coastal_drop_na <- MD_masternat_coastal %>% 
   drop_na(latitude)
 #Convert iNaturalist dataframes into sf objects
-MD_masternat_coastal_sf <- sf::st_as_sf(MD_masternat_coastal_drop_na, coords = c("latitude", "longitude"))
+MD_masternat_coastal_sf <- sf::st_as_sf(MD_masternat_coastal_drop_na, coords =c("longitude", "latitude"), crs = st_crs(4269))
 ```
 
 ```{r}
@@ -218,10 +211,10 @@ piedmont_na_lat <- which(is.na(MD_masternat_piedmont$latitude))
 piedmont_na_lon <- which(is.na(MD_masternat_piedmont$longitude))
 #Both columns return NA values in 100 rows
 #Remove rows in dateframe with NA values
-MD_masternat_piedmont_drop_na <- MD_masternat_coastal %>% 
+MD_masternat_piedmont_drop_na <- MD_masternat_piedmont %>% 
   drop_na(latitude)
 #Convert iNaturalist dataframes into sf objects
-MD_masternat_piedmont_sf <- sf::st_as_sf(MD_masternat_piedmont_drop_na, coords = c("latitude", "longitude"))
+MD_masternat_piedmont_sf <- sf::st_as_sf(MD_masternat_piedmont_drop_na, coords = c("longitude", "latitude"), crs = st_crs(4269))
 ```
 
 ```{r}
@@ -237,23 +230,67 @@ biodiversity_na_lon <- which(is.na(MD_biodiversity$longitude))
 MD_biodiversity_drop_na <- MD_biodiversity %>% 
   drop_na(latitude)
 #Convert iNaturalist dataframes into sf objects
-MD_biodiversity_sf <- sf::st_as_sf(MD_biodiversity_drop_na, coords = c("latitude", "longitude"))
+MD_biodiversity_sf <- sf::st_as_sf(MD_biodiversity_drop_na, coords = c("longitude", "latitude"), crs = st_crs(4269))
 ```
 
-```{MD_masternat_piedmont_sf <-}
-MD_biodiversity_sf <-
+### Filter Research Grade Data
 
-#Transform iNaturalist data to match maryland_data CRS
-MD_masternat_coastal_std <- 
-  st_transform(MD_masternat_coastal_sf, st_crs(maryland_data))
-MD_masternat_piedmont_std <-
-  st_transform(MD_masternat_piedmont_sf, st_crs(maryland_data))
-MD_masternat_biodiversity_std <-
-  st_transform(MD_masternat_coastal_sf, st_crs(maryland_data))
+-   Note: column names are not consistent between all iNaturalist Projects (see taxon ID column)
+
+    -   Should I rename all the columns as part of my data cleaning in case I want to join datasets later?
+
+```{r}
+#Create new dataframe, filtering out unecessary variables
+#Keep variables that will be useful in further analysis
+#Coastal
+MD_masternat_coastal_sm <- 
+  MD_masternat_coastal_sf %>%
+  select(all_of(c("id", 
+                  "taxon_id",
+                  "observed_on", 
+                  "description", 
+                  "place_guess", 
+                  "quality_grade")))
+#Filter dataframe down to research quality observations
+MD_masternat_coastal_researchgrade <- 
+  filter(MD_masternat_coastal_sm, quality_grade == "research")
+#Piedmont
+MD_masternat_piedmont_sm <- 
+  MD_masternat_piedmont_sf %>%
+  select(all_of(c("id", 
+                  "taxon_id",
+                  "observed_on", 
+                  "description", 
+                  "place_guess", 
+                  "quality_grade")))
+#Filter dataframe down to research quality observations
+MD_masternat_piedmont_researchgrade <- 
+  filter(MD_masternat_piedmont_sm, quality_grade == "research")
+#Biodiversity data
+MD_biodiversity_sm <-
+  MD_biodiversity_sf %>%
+  select(all_of(c("id",
+                  "taxon.id",
+                  "observed_on",
+                  "description",
+                  "place_guess",
+                  "quality_grade")))
+#Filter dataframe down to research quality observations
+MD_biodiversity_researchgrade <- 
+  filter(MD_biodiversity_sm, quality_grade == "research")
 ```
 
 ```{r}
-#Plot research quality data
+#Check CRS again
+st_crs(MD_masternat_coastal_std)
+st_crs(MD_masternat_piedmont_std)
+st_crs(MD_biodiversity_std)
+
+```
+
+### Maryland iNaturalist Research Grade Observation Maps
+
+```{r}
 #Set up base map
 data("us_states")
 maryland_data <- filter(us_states, NAME == "Maryland")
@@ -261,11 +298,44 @@ maryland_map <-
   ggplot() +
   geom_sf(data = maryland_data, color = "black", fill = NA)
 maryland_map
+#Plot research grade data as layer on base map
+#Coastal
+MD_masternat_coastal_research_map <- maryland_map +
+  geom_sf(
+    mapping = aes(),
+    data = MD_masternat_coastal_researchgrade) +
+  labs(
+    title = "Maryland Coastal Research Grade Observations",
+    caption = "Data courtesy of iNaturalist: Master Naturalist Program - Coastal Plain \n project_id = 474")
+MD_masternat_coastal_research_map
 
-MD_masternat_piedmont_research_map <- 
-  ggplot(MD_masternat_piedmont_researchgrade, mapping = aes (
-    
-  ))
+#ADD THEME, TITLE, LABELS
+
+#Piedmont
+MD_masternat_piedmont_research_map <- maryland_map +
+  geom_sf(
+    mapping = aes(),
+    data = MD_masternat_piedmont_researchgrade) +
+  labs(
+    title = "Maryland Piedmont Research Grade Observations",
+    caption = "Data courtesy of iNaturalist: Master Naturalist Program - Piedmont Region \n project_id = 1396"
+  )
+MD_masternat_piedmont_research_map
+
+#ADD THEME, TITLE, LABELS
+
+#state biodiversity data
+MD_biodiversity_researchgrade_map <- maryland_map +
+  geom_sf(
+    mapping = aes(),
+    data = MD_biodiversity_researchgrade) +
+  labs(
+    title = "Maryland Biodiversity Research Grade Observations",
+    caption = "Data courtesy of iNaturalist: Maryland Biodiversity Project \n project_id = 17241"
+  )
+MD_biodiversity_researchgrade_map
+
+#ADD THEME, TITLE, LABELS
 ```
 
 After further research I have decided that accessing data through GBIF will be a more reliable way to gather data from iNaturalist.
