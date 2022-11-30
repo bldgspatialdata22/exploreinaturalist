@@ -137,11 +137,11 @@ maryland_data <- readr::read_rds(here::here("data/maryland_data.rds"))
 
 ```{r}
 ## Map 100 spotted salamanders
-#a_mac <- get_inat_obs(taxon_name = "Ambystoma maculatum", year = 2021)
-#salamander_map <- inat_map(a_mac, plot = FALSE)
+a_mac <- get_inat_obs(taxon_name = "Ambystoma maculatum", year = 2021)
+salamander_map <- inat_map(a_mac, plot = FALSE)
 
-### Further customise the returned ggplot object
-#salamander_map + borders("state") + theme_bw()
+#Further customise the returned ggplot object
+salamander_map + borders("state") + theme_bw()
 ```
 
 Attempting to reduce the number of columns (75) down to a manageable and also relevent number of columns.
@@ -173,7 +173,7 @@ colnames(MD_masternat_piedmont)
 #lat/lon data is chr data; needs to be numeric in order to used as geom
 #
 #Check coordinate reference system of all data
-st_crs(maryland_data)
+basemap_crs <- st_crs(maryland_data)
 #CRS = "EPSG: 4269"
 st_crs(MD_masternat_coastal)
 #CRS = NA
@@ -198,7 +198,7 @@ coastal_na_lon <- which(is.na(MD_masternat_coastal$longitude))
 MD_masternat_coastal_drop_na <- MD_masternat_coastal %>% 
   drop_na(latitude)
 #Convert iNaturalist dataframes into sf objects
-MD_masternat_coastal_sf <- sf::st_as_sf(MD_masternat_coastal_drop_na, coords =c("longitude", "latitude"), crs = st_crs(4269))
+MD_masternat_coastal_sf <- sf::st_as_sf(MD_masternat_coastal_drop_na, coords =c("longitude", "latitude"), crs = basemap_crs)
 ```
 
 ```{r}
@@ -214,7 +214,7 @@ piedmont_na_lon <- which(is.na(MD_masternat_piedmont$longitude))
 MD_masternat_piedmont_drop_na <- MD_masternat_piedmont %>% 
   drop_na(latitude)
 #Convert iNaturalist dataframes into sf objects
-MD_masternat_piedmont_sf <- sf::st_as_sf(MD_masternat_piedmont_drop_na, coords = c("longitude", "latitude"), crs = st_crs(4269))
+MD_masternat_piedmont_sf <- sf::st_as_sf(MD_masternat_piedmont_drop_na, coords = c("longitude", "latitude"), crs = basemap_crs)
 ```
 
 ```{r}
@@ -225,12 +225,12 @@ MD_biodiversity$longitude = as.numeric(as.character(MD_biodiversity$longitude))
 #Check for NAs in lat/lon columns
 biodiversity_na_lat <- which(is.na(MD_biodiversity$latitude))
 biodiversity_na_lon <- which(is.na(MD_biodiversity$longitude))
-#Both columns return NA values in rows: 1341, 1342, 1344, 1382
+#Both columns return NA values 
 #Remove rows in dateframe with NA values
 MD_biodiversity_drop_na <- MD_biodiversity %>% 
   drop_na(latitude)
 #Convert iNaturalist dataframes into sf objects
-MD_biodiversity_sf <- sf::st_as_sf(MD_biodiversity_drop_na, coords = c("longitude", "latitude"), crs = st_crs(4269))
+MD_biodiversity_sf <- sf::st_as_sf(MD_biodiversity_drop_na, coords = c("longitude", "latitude"), crs = basemap_crs)
 ```
 
 ### Filter Research Grade Data
@@ -282,9 +282,9 @@ MD_biodiversity_researchgrade <-
 
 ```{r}
 #Check CRS again
-st_crs(MD_masternat_coastal_std)
-st_crs(MD_masternat_piedmont_std)
-st_crs(MD_biodiversity_std)
+st_crs(MD_masternat_coastal_sf)
+st_crs(MD_masternat_piedmont_sf)
+st_crs(MD_biodiversity_sf)
 
 ```
 
@@ -314,12 +314,11 @@ MD_masternat_coastal_research_map
 #Piedmont
 MD_masternat_piedmont_research_map <- maryland_map +
   geom_sf(
-    mapping = aes(),
+    mapping = aes(color = taxon_id),
     data = MD_masternat_piedmont_researchgrade) +
   labs(
     title = "Maryland Piedmont Research Grade Observations",
-    caption = "Data courtesy of iNaturalist: Master Naturalist Program - Piedmont Region \n project_id = 1396"
-  )
+    caption = "Data courtesy of iNaturalist: Master Naturalist Program - Piedmont Region \n project_id = 1396")
 MD_masternat_piedmont_research_map
 
 #ADD THEME, TITLE, LABELS
@@ -327,12 +326,11 @@ MD_masternat_piedmont_research_map
 #state biodiversity data
 MD_biodiversity_researchgrade_map <- maryland_map +
   geom_sf(
-    mapping = aes(),
+    mapping = aes(color = taxon.id),
     data = MD_biodiversity_researchgrade) +
   labs(
     title = "Maryland Biodiversity Research Grade Observations",
-    caption = "Data courtesy of iNaturalist: Maryland Biodiversity Project \n project_id = 17241"
-  )
+    caption = "Data courtesy of iNaturalist: Maryland Biodiversity Project \n project_id = 17241")
 MD_biodiversity_researchgrade_map
 
 #ADD THEME, TITLE, LABELS
@@ -370,7 +368,9 @@ GBIF_MD_research_grade <-
   occurrenceStatus = "present",
   stateProvince = "Maryland"
 )
+readr::write_rds(GBIF_MD_research_grade, here::here("data/GBIF_MD_research_grade.rds"))
 
+GBIF_MD_research_grade <- readr::read_rds(here::here("data/GBIF_MD_research_grade.rds"))
 # Subset data tibble and assign to original variable 
 # FIXME: You should save the metadata attached to the original results from occ_search() in case you need it later. Your original code just replaced the original results with the data
 GBIF_MD_research_grade_full <- GBIF_MD_research_grade
@@ -389,11 +389,20 @@ MD_species <- GBIF_MD_research_grade %>% count(scientificName)
 MD_classcount <- GBIF_MD_research_grade %>% count(class)
 # 24 unique biological classes are reported in the data
 # Highest number of observations per class is reported in Aves (birds) at 286 observations.
-MD_unique_birds <- GBIF_MD_research_grade %>%
-  filter(class == "Aves") %>%
-  count(genus, species)
+MD_unique_birds<- GBIF_MD_research_grade %>%
+  group_by(genus)%>%
+  filter(class == "Aves")
+
+MD_unique_birds_sf <-  sf::st_as_sf(MD_unique_birds, coords =c("decimalLongitude", "decimalLatitude"), crs = st_crs(4269))
+  
 # Of the 286 bird observations, 84 unique species have been reported in this dataset.
 
+MD_unique_birds_bar <-
+  ggplot(MD_unique_birds_sf, 
+         aes(x = year, y = species)) +
+  geom_col 
+
+MD_unique_birds_bar
 # TODO: Consider using knitr::kable() or gt::gt() to create tables based on these counts - see the example below
 MD_unique_birds %>% 
   arrange(desc(n)) %>% 

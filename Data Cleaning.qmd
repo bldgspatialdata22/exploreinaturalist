@@ -1,0 +1,41 @@
+---
+title: "Data Cleaning"
+format: html
+editor: visual
+---
+
+```{r}
+library(dplyr)
+library(sf)
+```
+
+```{r}
+#Check out data
+#What is the data structure of each dataset?
+biodiv_obs
+summary(biodiv_obs)
+sf::st_crs(biodiv_obs)
+#What are the column names?
+colnames(biodiv_obs)
+#Are they all unique?
+#Are they consistent between datasets?
+#Which variables are important to keep for further analysis?
+
+```
+
+```{r}
+#Drop columns
+dplyr::filter()
+
+#Rename column names to be consistent between datasets
+
+#Change column data types
+
+#Drop NA and null values
+
+#Transform from dataframe to spatial dataframe
+```
+
+```{r}
+
+```
