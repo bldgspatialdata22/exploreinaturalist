@@ -1,3 +1,5 @@
+------------------------------------------------------------------------
+
 ---
 title: "Set Up"
 format: html
@@ -9,9 +11,9 @@ editor: visual
 ```{r}
 remotes::install_github("ropensci/rinat")
 remotes::install_github("ropensci/rgbif")
+library(tidyverse) 
 library(rinat) #R package to retreive data from iNaturalist database
 library(rgbif) #R package to retreive data from GBIF database
-library(tidyverse) 
 library(ggplot2) #R package for creating plots and maps
 library(spData) #R package for importing US states data
 library(sf) #R package for working with simple features
@@ -33,7 +35,7 @@ biodiv_obs <- get_inat_obs_project("biodiversity-of-maryland", type = "observati
 readr::write_rds(biodiv_obs, here::here("data/biodiv_obs.rds"))
 
 data("us_states")
-maryland_data <- dpylr::filter(us_states, NAME == "Maryland")
+maryland_data <- dplyr::filter(us_states, NAME == "Maryland")
 
 readr::write_rds(maryland_data, here::here("data/maryland_data.rds"))
 ```

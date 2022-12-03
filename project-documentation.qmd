@@ -173,6 +173,7 @@ colnames(MD_masternat_piedmont)
 #lat/lon data is chr data; needs to be numeric in order to used as geom
 #
 #Check coordinate reference system of all data
+
 basemap_crs <- st_crs(maryland_data)
 #CRS = "EPSG: 4269"
 st_crs(MD_masternat_coastal)
@@ -181,6 +182,14 @@ st_crs(MD_masternat_piedmont)
 #CRS = NA
 st_crs(MD_biodiversity)
 #CRS = NA
+```
+
+### Set Basemap for plots
+
+```{r}
+osmdata::getbb("Maryland")
+MD_bbox <- sf::st_bbox(c(xmin = -79.48731, xmax = -74.98520, ymin = 37.88653, ymax = 39.72288), crs = st_crs(4269))
+basemap <- basemaps::set_defaults(ext = MD_bbox, map_service = "osm", map_type = "world_light_gray_base")
 ```
 
 ### Data Cleaning
