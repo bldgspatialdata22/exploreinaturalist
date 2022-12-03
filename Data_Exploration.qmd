@@ -1,0 +1,161 @@
+---
+title: "Data Exploration"
+editor: visual
+---
+
+```{r setup}
+library(ggplot2)
+library(dplyr)
+
+maryland_data <- readr::read_rds(here::here("data/maryland_data.rds"))
+
+# FIXME: These are the data objects you are currently using in this exploratory phase of the analysis. You need to either generate them in this code or load them from a saved object or file.
+
+# coastal_researchgrade <-
+# piedmont_researchgrade <-
+# biodiv_researchgrade <-
+# GBIF_sf <- 
+# GBIF_MD_research_grade_FULL <-
+```
+
+Introduction to the exploration
+
+```{r}
+# Set up base map
+maryland_map <-
+  ggplot() +
+  geom_sf(data = maryland_data, color = "black", fill = NA)
+#Plot research grade data as layer on base map
+
+maryland_map
+```
+
+iNaturalist has multiple projects that vary by geography:
+
+```{r}
+# Coastal
+coastal_research_map <- maryland_map +
+  geom_sf(
+    mapping = aes(),
+    data = coastal_researchgrade) +
+  labs(
+    title = "Maryland Coastal Research Grade Observations",
+    caption = "Data courtesy of iNaturalist: Master Naturalist Program - Coastal Plain \n project_id = 474")
+
+coastal_research_map
+
+#Piedmont
+piedmont_research_map <- maryland_map +
+  geom_sf(
+    mapping = aes(),
+    data = piedmont_researchgrade) +
+  labs(
+    title = "Maryland Piedmont Research Grade Observations",
+    caption = "Data courtesy of iNaturalist: Master Naturalist Program - Piedmont Region \n project_id = 1396")
+
+piedmont_research_map
+
+#state biodiversity data
+biodiv_researchgrade_map <- maryland_map +
+  geom_sf(
+    mapping = aes(),
+    data = biodiv_researchgrade) +
+  labs(
+    title = "Maryland Biodiversity Research Grade Observations",
+    caption = "Data courtesy of iNaturalist: Maryland Biodiversity Project \n project_id = 17241")
+
+biodiv_researchgrade_map
+```
+
+```{r}
+# Add a project indicator variable
+coastal_researchgrade$project <- "Coastal"
+piedmont_researchgrade$project <- "Piedmont"
+
+# Combine project data into a single sf object
+region_researchgrade <-
+  bind_rows(
+    coastal_researchgrade,
+    piedmont_researchgrade
+    )
+
+masternat_map <- maryland_map +
+  geom_sf(
+    mapping = aes(color = project),
+    alpha = 0.6,
+    size = 0.4,
+    data = region_researchgrade
+    ) +
+  # geom_sf_label() +
+  labs(
+    title = "Maryland Masternaturalist Research Grade Observations",
+    caption = "Data combined from piedmont and coastal regional projects"
+    )
+  
+masternat_map
+```
+
+We can look at variation by kingdom, genus and species:
+
+```{r}
+GBIF_kingdoms_map <- 
+  ggplot(GBIF_sf) +
+  geom_bar(mapping = aes(x = kingdom)) +
+  labs(title = "Maryland Biodiversity by Kingdom")
+
+GBIF_kingdoms_map
+
+```
+
+```{r}
+MD_corvids <-
+  GBIF_MD_research_grade_FULL %>%
+  group_by(genus) %>%
+  filter(family == "Corvidae", !is.na(species))
+
+MD_corvids_sf <-
+  sf::st_as_sf(
+  MD_corvids,
+  coords = c("decimalLongitude", "decimalLatitude"),
+  crs = st_crs(4269)
+  )
+  
+# Of the 286 bird observations, 84 unique species have been reported in this dataset.
+MD_corvids_bar <-
+  ggplot(MD_corvids_sf, aes(x = species, fill = species)) +
+  geom_bar() +
+  scale_fill_brewer(
+    type = "qual",
+    palette = "Set1"
+  ) +
+  guides(fill = "none") +
+  coord_flip()
+
+MD_corvids_bar
+```
+
+```{r}
+MD_corvids_sf <- sf::st_transform(MD_corvids_sf, 3857)
+
+# FIXME: Sign up for an account and then get an access token here: https://account.mapbox.com/access-tokens/
+# Then use the function mapboxapi::mb_access_token() to save the token locally to use the mapboxapi::layer_static_mapbox function
+
+ggplot() +
+  mapboxapi::layer_static_mapbox(
+    location = MD_corvids_sf,
+    style_url = "mapbox://styles/mapbox/light-v10"
+  ) +
+  geom_sf(
+    data = MD_corvids_sf,
+    aes(color = species),
+    alpha = 0.7,
+    size = 0.3
+    ) +
+  scale_color_brewer(
+    type = "qual",
+    palette = "Set1"
+    ) +
+  theme(
+    legend.position = "bottom"
+  )
+```

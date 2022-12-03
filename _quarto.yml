@@ -1,8 +1,6 @@
 project:
   title: "exploreinaturalist"
 
-editor: visual
-
 website:
   title: "Explore iNaturalist"
   navbar:
