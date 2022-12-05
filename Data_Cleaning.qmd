@@ -4,11 +4,18 @@ format: html
 editor: visual
 ---
 
-# Data Cleaning
+## Data Cleaning
 
-```{r}
-library(dplyr)
-library(sf)
+Install required packages and libraries for cleaning data.
+
+```{r setup}
+
+# install.packages("tidyverse")
+library(readr) # R package for reading and writing files locally
+library(dplyr) # R package for data manipulation
+library(sf) #R package for handling simple feature spatial data
+library(tidyr) # R package for creating tidy data
+library(janitor) # R package with tools for examining and cleaning data
 
 # Read data saved to data folder
 piedmont_obs <- readr::read_rds(here::here("data/piedmont_obs.rds"))
@@ -17,11 +24,14 @@ biodiv_obs <- readr::read_rds(here::here("data/biodiv_obs.rds"))
 maryland_data <- readr::read_rds(here::here("data/maryland_data.rds"))
 GBIF_MD_research_grade_FULL <-
   readr::read_tsv("data/GBIF_MD_research_grade.csv")
+
+#Define Coordinate Reference System that will later integrate with Mapbox basemap
+crs <- 3857
 ```
 
-## Check Out Data
+### Inspect Data
 
-### Questions to Consider:
+#### Questions to Consider:
 
 1.  What is the the data structure of each dataset?
 
@@ -32,53 +42,53 @@ GBIF_MD_research_grade_FULL <-
 ```{r}
 # Check out data
 # What is the data structure of each dataset?
-biodiv_obs
+# Are they tibbles, dataframes, spatial dataframes?
+# If spatial, how are coordinates stored?
+#
+#MARYLAND MASTER NATURALIST COASTAL REGION PROJECT
+head(coastal_obs)
+#returns first 6 rows of dataframe
+summary(coastal_obs)
+sf::st_crs(coastal_obs)
+#crs = NA
+# What are the column names?
+colnames(coastal_obs)
+#MARYLAND MASTER NATURALIST PIEDMONT REGION PROJECT
+head(piedmont_obs)
+summary(piedmont_obs)
+sf::st_crs(piedmont_obs)
+#crs = NA
+#
+#MARYLAND BIODIVERSITY PROJECT
+head(biodiv_obs)
 summary(biodiv_obs)
 sf::st_crs(biodiv_obs)
-# What are the column names?
-colnames(biodiv_obs)
-# Are they all unique?
-# Are they consistent between datasets?
+#crs = NA
+#
+#GBIF RESEARCH-GRADE, MARYLAND iNATURALIST OBSERVATIONS
+head(GBIF_MD_research_grade_FULL)
+#It is a tibble dataframe
+summary(GBIF_MD_research_grade_FULL)
+sf::st_crs((GBIF_MD_research_grade_FULL))
+#crs = NA
+```
+
+The janitor function `compare_df_cols_same()` when `bind_method = "rbind"` returns a data frame where column names and data types are more easily comparible.
+
+GBIF stores iNaturalist attribute data very differently than iNaturalist does. Some of the data transformations performed by GBIF include:, converting strings of numbers into type numeric data, creating new attributes from complex taxonomic classifications that are stored in iNaturalist as single attributes, and removing data deemed unnecessary from a biological research perspective (e.i. user information).
+
+```{r}
+janitor::compare_df_cols_same(coastal_obs, piedmont_obs, biodiv_obs, GBIF_MD_research_grade_FULL, bind_method = "rbind")
 # Which variables are important to keep for further analysis?
 ```
 
-## Filter Data
+### Prepare Spatial Attributes For Data Transformation
 
-After exploring each dataset I have decided to reduce the data frames down to 10 columns:
+Upon investigating each project, one thing to note is that the geolocation of each observation is stored at lat/lon coordinates in two separate attribute columns with respective names. These coordinates are also stored as character data, which is not compatible with sf logic. In order create plots and maps of these data, first the coordinate data need to be converted to type numeric, then transformed into a simple feature where the geometry is set to the lat/lon data.
 
--   "user.login" or "recordedBy" = iNaturalist username
+In addition, any observations where users did not report their geolocation are not mappable, and therefore should be removed from the dataset. These observations can be found by calling the logical operator `which()` with `is.na()` on the coordinate columns.
 
--   "id" or "gbifID" = unique id number assigned to observation
-
--   "observed_on" or "eventDate" = date of observation reported by user
-
-    -   note: "observed_on" format (YYYY-MM-DD); "eventDate" format (YYYY
-
--   "taxon.id" or "speciesKey" = unique id number assigned to a species
-
--   "taxon.name" or "species" = scientific name (genus + epithet) of species
-
--   "iconic_taxon.name" or "kingdom" = name of higher classification of species observed
-
--   "latitude" or "decimalLatitude"
-
--   "longitude" or "decimalLongitude"
-
-```{r}
-# Drop columns
-# dplyr::filter()
-
-# Rename column names to be consistent between datasets
-
-# Change column data types
-
-# Drop NA and null values
-
-# Transform from dataframe to spatial dataframe
-crs <- st_crs(4269)
-```
-
-```{r}
+```{r coastal}
 # Prep coastal_obs data
 # Convert lat/lon columns to numeric type
 coastal_obs$latitude <- as.numeric(as.character(coastal_obs$latitude))
@@ -94,7 +104,7 @@ coastal_obs_drop_na <- coastal_obs %>%
 coastal_obs_sf <- sf::st_as_sf(coastal_obs_drop_na, coords = c("longitude", "latitude"), crs = crs)
 ```
 
-```{r}
+```{r piedmont}
 piedmont_obs$latitude <- as.numeric(as.character(piedmont_obs$latitude))
 piedmont_obs$longitude <- as.numeric(as.character(piedmont_obs$longitude))
 # Check for NAs in lat/lon columns
@@ -108,7 +118,7 @@ piedmont_obs_drop_na <- piedmont_obs %>%
 piedmont_obs_sf <- sf::st_as_sf(piedmont_obs_drop_na, coords = c("longitude", "latitude"), crs = crs)
 ```
 
-```{r}
+```{r biodiv}
 # Repeat aboce steps for biodiv_obs data
 # Convert lat/lon columns to numeric type
 biodiv_obs$latitude <- as.numeric(as.character(biodiv_obs$latitude))
@@ -123,6 +133,30 @@ biodiv_obs_drop_na <- biodiv_obs %>%
 # Convert iNaturalist dataframes into sf objects
 biodiv_obs_sf <- sf::st_as_sf(biodiv_obs_drop_na, coords = c("longitude", "latitude"), crs = crs)
 ```
+
+### Filter Data
+
+After exploring each dataset I have decided to reduce the data frames down to 10 columns:
+
+-   "user.login" or "recordedBy" = iNaturalist username
+
+-   "id" or "gbifID" = unique id number assigned to observation
+
+-   "observed_on" or "eventDate" = date of observation reported by user
+
+    -   note: "observed_on" format (YYYY-MM-DD); "eventDate" format (YYYY-MM-DDT "HH:MM:SS")
+
+-   "taxon.id" or "speciesKey" = unique id number assigned to a species
+
+-   "taxon.name" or "species" = scientific name (genus + epithet) of species
+
+-   "iconic_taxon.name" or "kingdom" = name of higher classification of species observed
+
+-   "latitude" or "decimalLatitude"
+
+-   "longitude" or "decimalLongitude"
+
+Additional columns were kept for GBIF occurrence data, which does not exist in datasets obtained directly through the iNaturalist API.
 
 ```{r}
 # Create new dataframe, filtering out unecessary variables
@@ -148,6 +182,8 @@ coastal_researchgrade <-
     coastal_sm, quality_grade == "research",
     captive == "FALSE"
   )
+
+readr::write_rds(coastal_researchgrade, here::here("data/coastal_researchgrade.rds"))
 # Piedmont
 piedmont_sm <-
   piedmont_obs_sf %>%
@@ -168,6 +204,8 @@ piedmont_researchgrade <-
     piedmont_sm, quality_grade == "research",
     captive == "FALSE"
   )
+
+readr::write_rds(piedmont_researchgrade, here::here("data/piedmont_researchgrade.rds"))
 # Biodiversity data
 biodiv_sm <-
   biodiv_obs_sf %>%
@@ -189,6 +227,8 @@ biodiv_researchgrade <-
     biodiv_sm, quality_grade == "research",
     captive == "FALSE"
   )
+
+readr::write_rds(biodiv_researchgrade, here::here("data/biodiv_researchgrade.rds"))
 ```
 
 ```{r}
@@ -207,6 +247,8 @@ GBIF_sm <-
     "gbifID",
     "kingdom",
     "class",
+    "family",
+    "genus",
     "species",
     "decimalLatitude",
     "decimalLongitude",
@@ -216,4 +258,8 @@ GBIF_sm <-
   )))
 
 GBIF_sf <- sf::st_as_sf(GBIF_sm, coords = c("decimalLongitude", "decimalLatitude"), crs = crs)
+
+st_crs(GBIF_sf)
+
+readr::write_rds(GBIF_sf, here::here("data/GBIF_sf.rds"))
 ```

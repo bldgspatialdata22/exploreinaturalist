@@ -4,21 +4,28 @@ editor: visual
 ---
 
 ```{r setup}
-library(ggplot2)
-library(dplyr)
+
+#install.packages("mapboxapi")
+#install.packages("ggspatial")
+
+library(ggplot2) # R package for creating plots and maps
+library(dplyr) # R package for data manipulation
+library(mapboxapi) # R package for interfacing with Mapbox API. *Requires access token in order to use
 
 maryland_data <- readr::read_rds(here::here("data/maryland_data.rds"))
 
-# FIXME: These are the data objects you are currently using in this exploratory phase of the analysis. You need to either generate them in this code or load them from a saved object or file.
 
-# coastal_researchgrade <-
-# piedmont_researchgrade <-
-# biodiv_researchgrade <-
-# GBIF_sf <- 
-# GBIF_MD_research_grade_FULL <-
+coastal_researchgrade <- readr::read_rds(here::here("data/coastal_researchgrade.rds"))
+piedmont_researchgrade <- readr::read_rds(here::here("data/piedmont_researchgrade.rds"))
+biodiv_researchgrade <- readr::read_rds(here::here("data/biodiv_researchgrade.rds"))
+GBIF_sf <- readr::read_rds(here::here("data/GBIF_sf.rds"))
 ```
 
-Introduction to the exploration
+Introduction to the exploration:
+
+Data from iNaturalist projects were retrieved using r package "rinat" directly from the iNaturalist.
+
+iNaturalist data was also retrieved via the Global Biodiversity Information Facility.
 
 ```{r}
 # Set up base map
@@ -34,7 +41,10 @@ iNaturalist has multiple projects that vary by geography:
 
 ```{r}
 # Coastal
-coastal_research_map <- maryland_map +
+coastal_research_map <- ggplot() +
+  mapboxapi::layer_static_mapbox(
+    location = coastal_researchgrade,
+    style_url = "mapbox://styles/mapbox/light-v10") +
   geom_sf(
     mapping = aes(),
     data = coastal_researchgrade) +
@@ -107,22 +117,22 @@ GBIF_kingdoms_map
 
 ```
 
+Of the 84 unique bird species observed by users in Maryland, how many were corvids (crow family)?
+
+FIlter GBIF_MD_research_grade to return only observations in the family "Corvidae". Make sure to disclude observations where the species attribute is missing or NA. Transform dataframe into a spatial dataframe, assigning the lat/lon columns to coords to create the geometry column.
+
+What species of corvidae were observed in Maryland? What was the most common corvid species? The least common?
+
+Plot corvid observations on a bar chart. Set aesthetics to show each species as its own bar. Label count at the top of each bar. Set fill to species. Set scale_fill_brewer aesthetics type as qualitative and palette to Set1. Call coord_flip to rotate plot so the x-axis and y-axis are switched.
+
 ```{r}
 MD_corvids <-
-  GBIF_MD_research_grade_FULL %>%
+  GBIF_sf %>%
   group_by(genus) %>%
   filter(family == "Corvidae", !is.na(species))
-
-MD_corvids_sf <-
-  sf::st_as_sf(
-  MD_corvids,
-  coords = c("decimalLongitude", "decimalLatitude"),
-  crs = st_crs(4269)
-  )
   
-# Of the 286 bird observations, 84 unique species have been reported in this dataset.
 MD_corvids_bar <-
-  ggplot(MD_corvids_sf, aes(x = species, fill = species)) +
+  ggplot(MD_corvids, aes(x = species, fill = species)) +
   geom_bar() +
   scale_fill_brewer(
     type = "qual",
@@ -134,19 +144,16 @@ MD_corvids_bar <-
 MD_corvids_bar
 ```
 
+Where were corvids observed in Maryland? Are there any hotspots for corvid observations?
+
 ```{r}
-MD_corvids_sf <- sf::st_transform(MD_corvids_sf, 3857)
-
-# FIXME: Sign up for an account and then get an access token here: https://account.mapbox.com/access-tokens/
-# Then use the function mapboxapi::mb_access_token() to save the token locally to use the mapboxapi::layer_static_mapbox function
-
 ggplot() +
   mapboxapi::layer_static_mapbox(
-    location = MD_corvids_sf,
+    location = MD_corvids,
     style_url = "mapbox://styles/mapbox/light-v10"
   ) +
   geom_sf(
-    data = MD_corvids_sf,
+    data = MD_corvids,
     aes(color = species),
     alpha = 0.7,
     size = 0.3
