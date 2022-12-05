@@ -26,7 +26,7 @@ GBIF_MD_research_grade_FULL <-
   readr::read_tsv("data/GBIF_MD_research_grade.csv")
 
 #Define Coordinate Reference System that will later integrate with Mapbox basemap
-crs <- 3857
+crs <- st_crs(3857)
 ```
 
 ### Inspect Data
