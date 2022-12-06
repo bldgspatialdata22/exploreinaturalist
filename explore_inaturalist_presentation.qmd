@@ -1,0 +1,37 @@
+---
+title: "Exploring iNaturalist Data"
+author: " "
+format: revealjs
+editor: visual
+---
+
+# 
+Initial goals for project
+
+-   What were your initial goals for the project?
+
+# How my goals changed
+
+-   How did they change or develop as you worked on your project?
+
+# Data sources
+
+-   What data sources did you use? How, why, and where were they created?
+
+## Resources
+
+-   What packages,
+
+-   templates,
+
+-   other resources
+
+# Challenges
+
+-   What challenges did you encounter in making use of these resources and this data?
+
+# Small Wins
+
+-   What do you think your project does well?
+
+# Approaches or ideas for the future

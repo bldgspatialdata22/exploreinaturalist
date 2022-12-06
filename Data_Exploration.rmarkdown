@@ -1,0 +1,243 @@
+---
+title: "Data Exploration"
+editor: visual
+---
+
+```{r setup}
+
+#install.packages("mapboxapi")
+#install.packages("ggspatial")
+
+library(ggplot2) # R package for creating plots and maps
+library(dplyr) # R package for data manipulation
+library(mapboxapi) # R package for interfacing with Mapbox API. *Requires access token in order to use
+
+maryland_data <- readr::read_rds(here::here("data/maryland_data.rds"))
+
+
+coastal_researchgrade <- readr::read_rds(here::here("data/coastal_researchgrade.rds"))
+piedmont_researchgrade <- readr::read_rds(here::here("data/piedmont_researchgrade.rds"))
+biodiv_researchgrade <- readr::read_rds(here::here("data/biodiv_researchgrade.rds"))
+GBIF_sm <- readr::read_rds(here::here("data/GBIF_sm.rds"))
+```
+
+
+Introduction to the exploration:
+
+Data from iNaturalist projects were retrieved using r package "rinat" directly from the iNaturalist.
+
+iNaturalist data was also retrieved via the Global Biodiversity Information Facility.
+
+
+```{r}
+# Set up base map
+maryland_map <-
+  ggplot() +
+  geom_sf(data = maryland_data, color = "black", fill = NA)
+#Plot research grade data as layer on base map
+
+maryland_map
+```
+
+
+iNaturalist has multiple projects that vary by geography:
+
+
+```{r}
+# Coastal
+coastal_research_map <- ggplot() +
+  mapboxapi::layer_static_mapbox(
+    location = coastal_researchgrade,
+    style_url = "mapbox://styles/mapbox/light-v10") +
+  geom_sf(
+    mapping = aes(),
+    color = "red",
+    size = 2,
+    alpha = 0.3,
+    shape = 4,
+    data = coastal_researchgrade) +
+  labs(
+    title = "Maryland Coastal Research Grade Observations",
+    caption = "Data courtesy of iNaturalist: Master Naturalist Program - Coastal Plain \n project_id = 474")
+
+coastal_research_map
+
+#Piedmont
+piedmont_research_map <- ggplot() +
+  mapboxapi::layer_static_mapbox(
+    location = piedmont_researchgrade,
+    style_url = "mapbox://styles/mapbox/light-v10") +
+  geom_sf(
+    mapping = aes(),
+    color = "blue",
+    size = 2,
+    alpha = 0.3,
+    shape = 4,
+    data = piedmont_researchgrade) +
+  labs(
+    title = "Maryland Piedmont Research Grade Observations",
+    caption = "Data courtesy of iNaturalist: Master Naturalist Program - Piedmont Region \n project_id = 1396")
+
+piedmont_research_map
+
+#state biodiversity data
+biodiv_researchgrade_map <- ggplot() +
+  mapboxapi::layer_static_mapbox(
+    location = biodiv_researchgrade,
+    style_url = "mapbox://styles/mapbox/light-v10") +
+  geom_sf(
+    mapping = aes(),
+    size = 2,
+    alpha = 0.3,
+    shape = 4,
+    data = biodiv_researchgrade) +
+  labs(
+    title = "Maryland Biodiversity Research Grade Observations",
+    caption = "Data courtesy of iNaturalist: Maryland Biodiversity Project \n project_id = 17241")
+
+biodiv_researchgrade_map
+```
+
+```{r}
+# Add a project indicator variable
+coastal_researchgrade$project <- "Coastal"
+piedmont_researchgrade$project <- "Piedmont"
+
+# Combine project data into a single sf object
+region_researchgrade <-
+  bind_rows(
+    coastal_researchgrade,
+    piedmont_researchgrade
+    )
+
+masternat_map <- ggplot() +
+  mapboxapi::layer_static_mapbox(
+    location = region_researchgrade,
+    style_url = "mapbox://styles/mapbox/light-v10") +
+  geom_sf(
+    mapping = aes(color = project),
+    size = 1,
+    alpha = 0.5,
+    shape = 4,
+    data = region_researchgrade
+    ) +
+  # geom_sf_label() +
+  labs(
+    title = "Maryland Masternaturalist Research Grade Observations",
+    caption = "Data combined from piedmont and coastal regional projects"
+    )
+  
+masternat_map
+```
+
+
+We can look at variation by kingdom, genus and species:
+
+
+```{r}
+GBIF_kingdoms_bar<- 
+  ggplot(GBIF_sm, aes(x = kingdom, fill = kingdom)
+  ) +
+  geom_bar() +
+    scale_fill_brewer(
+    type = "qual",
+    palette = "Dark2",
+  ) +
+  guides(fill = "none") +
+  labs(title = "Maryland Biodiversity by Kingdom") +
+  geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black")
+
+GBIF_kingdoms_bar
+
+# Create data
+plants_vs_animals <- 
+  filter(
+    GBIF_sm, kingdom == c("Animalia", "Plantae"))
+
+
+
+plants_vs_animals_bar <-
+  ggplot(plants_vs_animals, aes(x = kingdom, fill = kingdom)
+  ) +
+  geom_bar() +
+  scale_fill_brewer(
+    type = "qual",
+    palette = "Dark2") +
+#  guides(fill = "none") +
+   labs(title = "Plants vs Animals") +
+   geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black")
+  
+plants_vs_animals_bar
+
+# Compute the position of labels
+data <- plants_vs_animals %>% 
+  arrange(desc(kingdom)) %>%
+  mutate(prop = kingdom / sum(plants_vs_animals$kingdom) *100) %>%
+  mutate(ypos = cumsum(prop)- 0.5*prop )
+
+# Basic piechart
+ggplot(data, aes(x="", y=prop, fill=group)) +
+  geom_bar(stat="identity", width=1, color="white") +
+  coord_polar("y", start=0) +
+  theme_void() + 
+  theme(legend.position="none") +
+  
+  geom_text(aes(y = ypos, label = group), color = "white", size=6) +
+  scale_fill_brewer(palette="Set1")
+```
+
+
+Of the 84 unique bird species observed by users in Maryland, how many were corvids (crow family)?
+
+FIlter GBIF_MD_research_grade to return only observations in the family "Corvidae". Make sure to disclude observations where the species attribute is missing or NA. Transform dataframe into a spatial dataframe, assigning the lat/lon columns to coords to create the geometry column.
+
+What species of corvidae were observed in Maryland? What was the most common corvid species? The least common?
+
+Plot corvid observations on a bar chart. Set aesthetics to show each species as its own bar. Label count at the top of each bar. Set fill to species. Set scale_fill_brewer aesthetics type as qualitative and palette to Set1. Call coord_flip to rotate plot so the x-axis and y-axis are switched.
+
+
+```{r}
+MD_corvids <-
+  GBIF_sm %>%
+  group_by(genus) %>%
+  filter(family == "Corvidae", !is.na(species))
+  
+MD_corvids_bar <-
+  ggplot(MD_corvids, aes(x = species, fill = species)) +
+  geom_bar() +
+  scale_fill_brewer(
+    type = "qual",
+    palette = "Set1"
+  ) +
+  guides(fill = "none") +
+  coord_flip()
+
+MD_corvids_bar
+```
+
+
+Where were corvids observed in Maryland? Are there any hotspots for corvid observations?
+
+
+```{r}
+MD_corvid_sightings <- ggplot() +
+  mapboxapi::layer_static_mapbox(
+    location = MD_corvids,
+    style_url = "mapbox://styles/mapbox/light-v10") +
+  geom_sf(
+    data = MD_corvids,
+    aes(color = species),
+    alpha = 0.7,
+    size = 0.3
+    ) +
+  scale_color_brewer(
+    type = "qual",
+    palette = "Set1"
+    ) +
+  theme(
+    legend.position = "bottom"
+  )
+
+MD_corvid_sightings
+```
+

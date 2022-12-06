@@ -101,7 +101,10 @@ coastal_na_lon <- which(is.na(coastal_obs$longitude))
 coastal_obs_drop_na <- coastal_obs %>%
   tidyr::drop_na(latitude)
 # Convert iNaturalist dataframes into sf objects
-coastal_obs_sf <- sf::st_as_sf(coastal_obs_drop_na, coords = c("longitude", "latitude"), crs = crs)
+coastal_obs_sf <- sf::st_as_sf(coastal_obs_drop_na, coords = c("longitude", "latitude"), crs = 4269)
+
+coastal_3857 <-
+  sf::st_transform(coastal_obs_sf, crs = 3857)
 ```
 
 ```{r piedmont}
@@ -115,7 +118,12 @@ piedmont_na_lon <- which(is.na(piedmont_obs$longitude))
 piedmont_obs_drop_na <- piedmont_obs %>%
   tidyr::drop_na(latitude)
 # Convert iNaturalist dataframes into sf objects
-piedmont_obs_sf <- sf::st_as_sf(piedmont_obs_drop_na, coords = c("longitude", "latitude"), crs = crs)
+piedmont_obs_sf <- sf::st_as_sf(piedmont_obs_drop_na, coords = c("longitude", "latitude"), crs = 4269)
+
+piedmont_3857 <- 
+  sf::st_transform(piedmont_obs_sf, crs = 3857)
+
+st_crs(piedmont_3857)
 ```
 
 ```{r biodiv}
@@ -131,7 +139,11 @@ biodiversity_na_lon <- which(is.na(biodiv_obs$longitude))
 biodiv_obs_drop_na <- biodiv_obs %>%
   tidyr::drop_na(latitude)
 # Convert iNaturalist dataframes into sf objects
-biodiv_obs_sf <- sf::st_as_sf(biodiv_obs_drop_na, coords = c("longitude", "latitude"), crs = crs)
+biodiv_obs_sf <- sf::st_as_sf(biodiv_obs_drop_na, coords = c("longitude", "latitude"), crs = 4269)
+
+biodiv_3857 <- sf::st_transform(biodiv_obs_sf, crs = 3857)
+
+st_crs(biodiv_3857)
 ```
 
 ### Filter Data
@@ -163,7 +175,7 @@ Additional columns were kept for GBIF occurrence data, which does not exist in d
 # Keep variables that will be useful in further analysis
 # Coastal
 coastal_sm <-
-  coastal_obs_sf %>%
+  coastal_3857 %>%
   select(all_of(c(
     "id",
     "observed_on",
@@ -186,7 +198,7 @@ coastal_researchgrade <-
 readr::write_rds(coastal_researchgrade, here::here("data/coastal_researchgrade.rds"))
 # Piedmont
 piedmont_sm <-
-  piedmont_obs_sf %>%
+  piedmont_3857 %>%
   select(all_of(c(
     "id",
     "observed_on",
@@ -208,7 +220,7 @@ piedmont_researchgrade <-
 readr::write_rds(piedmont_researchgrade, here::here("data/piedmont_researchgrade.rds"))
 # Biodiversity data
 biodiv_sm <-
-  biodiv_obs_sf %>%
+  biodiv_3857 %>%
   select(all_of(c(
     "id",
     "observed_on",
@@ -231,18 +243,18 @@ biodiv_researchgrade <-
 readr::write_rds(biodiv_researchgrade, here::here("data/biodiv_researchgrade.rds"))
 ```
 
-```{r}
-# Check CRS again
-st_crs(coastal_researchgrade)
-st_crs(piedmont_researchgrade)
-st_crs(biodiv_researchgrade)
-```
-
 GBIF Data
 
 ```{r}
+GBIF_sf <- sf::st_as_sf(GBIF_MD_research_grade_FULL, coords = c("decimalLongitude", "decimalLatitude"), crs = 4269)
+
+GBIF_3857 <- 
+  sf::st_transform(GBIF_sf, crs = 3857)
+
+st_crs(GBIF_3857)
+
 GBIF_sm <-
-  GBIF_MD_research_grade_FULL %>%
+  GBIF_3857 %>%
   select(all_of(c(
     "gbifID",
     "kingdom",
@@ -250,16 +262,12 @@ GBIF_sm <-
     "family",
     "genus",
     "species",
-    "decimalLatitude",
-    "decimalLongitude",
     "eventDate",
     "recordedBy",
     "speciesKey"
   )))
 
-GBIF_sf <- sf::st_as_sf(GBIF_sm, coords = c("decimalLongitude", "decimalLatitude"), crs = crs)
 
-st_crs(GBIF_sf)
 
-readr::write_rds(GBIF_sf, here::here("data/GBIF_sf.rds"))
+readr::write_rds(GBIF_sm, here::here("data/GBIF_sm.rds"))
 ```
