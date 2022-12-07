@@ -26,6 +26,8 @@ editor: visual
 Spent a lot of time learning how to use R, which data to work with, and exploring rinat and rgbif
 :::
 
+# ![](deliverables/biodiv_research_map.png)
+
 # Data sources
 
 iNaturalist
@@ -51,6 +53,9 @@ Open-source data created by users
 Each organization structures data differently. iNat houses original user data, whereas GBIF hosts data from numerous publishers. So, iNat data has a lot of user attribute data whereas GBIF has alot of different taxonomic attributes attached to a each observation
 :::
 
+# ![](deliverables/coastal_research_map.png)
+# ![](deliverables/piedmont_research_map.png)
+
 ## Resources
 
 -   rinat, rgbif (Accessing data through APIs)
@@ -75,6 +80,9 @@ Each organization structures data differently. iNat houses original user data, w
 -   ei.: df -\> sf -\> then transform crs
 -   ggplot aesthetics in particular
 :::
+
+# ![](deliverables/GBIF_kingdoms_bar.png)
+# # ![](deliverables/plants_vs_animals_bar.png)
 
 # Small Wins
 
