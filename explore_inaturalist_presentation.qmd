@@ -1,37 +1,99 @@
 ---
 title: "Exploring iNaturalist Data"
-author: " "
 format: revealjs
 editor: visual
 ---
 
-# 
-Initial goals for project
+![](deliverables/mastnat_map.png)
 
--   What were your initial goals for the project?
+# Initial goals for project
+
+1.  Improve skills in R.
+2.  Compare ease of data retrieval from open-source databases, including iNaturalist, GBIF, and iMap.
+3.  Begin assessing the completeness, or accuracy, of data publicly-sourced data from iNaturalist. Find comparative measures based on biodiversity counts determined from each database's datasets.
+4.  Determine best use of iNaturalist data for research purposes.
+5.  Deliver project documentation, data visualization (possibly small multiples)
 
 # How my goals changed
 
--   How did they change or develop as you worked on your project?
+1.  Improve skills in R.
+2.  Compare ease of data retrieval from open-source databases, including iNaturalist, GBIF, ~~and iMap.~~
+3.  ~~Begin assessing the completeness, or accuracy, of data publicly-sourced data from iNaturalist. Find comparative measures based on biodiversity counts determined from each database's datasets.~~
+4.  ~~Determine best use of iNaturalist data for research purposes.~~
+5.  Deliver project documentation, data visualization ~~(possibly small multiples)~~
+
+::: notes
+Spent a lot of time learning how to use R, which data to work with, and exploring rinat and rgbif
+:::
 
 # Data sources
 
--   What data sources did you use? How, why, and where were they created?
+iNaturalist
+
+1.  Maryland Master Naturalist project data
+
+    -   [Piedmont Region](https://www.inaturalist.org/projects/maryland-master-naturalist-program-piedmont-region)
+    -   [Coastal Region](https://www.inaturalist.org/projects/maryland-master-naturalist-program-coastal-plain)
+
+2.  [Maryland Biodiversity project data](https://www.inaturalist.org/projects/maryland-biodiversity-project)
+
+3.  Global Biodiversity Information Facility
+
+    -   [iNaturalist Research-Grade Observations](https://www.gbif.org/occurrence/search?dataset_key=50c9509d-22c7-4a22-a47d-8c48425ef4a7)
+
+::: notes
+Open-source data created by users
+
+1.  Free to use
+2.  Creates online community
+3.  Projects are used to record biodiversity inventories of varying scopes
+
+Each organization structures data differently. iNat houses original user data, whereas GBIF hosts data from numerous publishers. So, iNat data has a lot of user attribute data whereas GBIF has alot of different taxonomic attributes attached to a each observation
+:::
 
 ## Resources
 
--   What packages,
-
--   templates,
-
--   other resources
+-   rinat, rgbif (Accessing data through APIs)
+-   tidyverse (For tidying data)
+    -   dplyr, tidyr, ggplot2, sf, readr
+-   janitor
+-   mapboxapi (base maps)
+-   DataCamp, package documentation, iNaturalist and GBIF API documentation
 
 # Challenges
 
 -   What challenges did you encounter in making use of these resources and this data?
+    -   Learning R syntax and tools
+
+    -   Understanding how to apply package documentation
+
+    -   Wrapping my head around how to create a project workflow
+
+::: notes
+-   What is actually happening when I run a line of code, and how do I fix it if it doesn't work?
+-   The proper order in which to perform data transformations
+-   ei.: df -\> sf -\> then transform crs
+-   ggplot aesthetics in particular
+:::
 
 # Small Wins
 
--   What do you think your project does well?
+-   I feel much more confident using R as a whole
+-   I learned alot about iNaturalist and GBIF
+-   Working with R packages that would with APIs
+
+::: notes
+-   Gained experience using online documentation to troubleshoot errors
+-   Learned project documentation skills
+-   Created data visualizations of iNaturalist data
+:::
 
 # Approaches or ideas for the future
+
+-   Narrow scope of project down to one dataset
+-   Develop a workflow for answers broader questions about data structure
+-   Then implement workflow with more datasets
+
+::: notes
+I thought I was starting with a really simple idea that could be built upon further down the line, but what I actually did was start with a slab of marble and chipped away small pieces
+:::

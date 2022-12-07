@@ -9,7 +9,6 @@
 <link href="explore_inaturalist_presentation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.1.189">
 
-  <meta name="author" content="kari moy">
   <title>Exploring iNaturalist Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -325,66 +324,174 @@
 
 <section id="title-slide" class="center">
   <h1 class="title">Exploring iNaturalist Data</h1>
-  <p class="author">kari moy</p>
 </section>
 
-<section id="section" class="slide level2">
-<h2></h2>
-<p>Initial goals for project</p>
-<ul>
-<li>What were your initial goals for the project?</li>
-</ul>
+<section class="slide level2">
+
+
+<img data-src="deliverables/mastnat_map.png" class="r-stretch"></section>
+<section id="initial-goals-for-project" class="title-slide slide level1 center">
+<h1>Initial goals for project</h1>
+<ol type="1">
+<li>Improve skills in R.</li>
+<li>Compare ease of data retrieval from open-source databases, including iNaturalist, GBIF, and iMap.</li>
+<li>Begin assessing the completeness, or accuracy, of data publicly-sourced data from iNaturalist. Find comparative measures based on biodiversity counts determined from each database’s datasets.</li>
+<li>Determine best use of iNaturalist data for research purposes.</li>
+<li>Deliver project documentation, data visualization (possibly small multiples)</li>
+</ol>
 </section>
-<section id="how-my-goals-changed" class="slide level2">
-<h2>How my goals changed</h2>
-<ul>
-<li>How did they change or develop as you worked on your project?</li>
-</ul>
+
+<section id="how-my-goals-changed" class="title-slide slide level1 center">
+<h1>How my goals changed</h1>
+<ol type="1">
+<li>Improve skills in R.</li>
+<li>Compare ease of data retrieval from open-source databases, including iNaturalist, GBIF, <del>and iMap.</del></li>
+<li><del>Begin assessing the completeness, or accuracy, of data publicly-sourced data from iNaturalist. Find comparative measures based on biodiversity counts determined from each database’s datasets.</del></li>
+<li><del>Determine best use of iNaturalist data for research purposes.</del></li>
+<li>Deliver project documentation, data visualization <del>(possibly small multiples)</del></li>
+</ol>
+<aside class="notes">
+<p>Spent a lot of time learning how to use R, which data to work with, and exploring rinat and rgbif</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<p><img data-src="deliverables/GBIF_kingdoms_barp.png"></p>
+<p><img data-src="deliverables/biodiv_research_map.png"></p>
 </section>
-<section id="data-sources" class="slide level2">
-<h2>Data sources</h2>
+
+<section>
+<section id="data-sources" class="title-slide slide level1 center">
+<h1>Data sources</h1>
+<p>iNaturalist</p>
+<ol type="1">
+<li><p>Maryland Master Naturalist project data</p>
 <ul>
-<li>What data sources did you use? How, why, and where were they created?</li>
-</ul>
+<li><a href="https://www.inaturalist.org/projects/maryland-master-naturalist-program-piedmont-region">Piedmont Region</a></li>
+<li><a href="https://www.inaturalist.org/projects/maryland-master-naturalist-program-coastal-plain">Coastal Region</a></li>
+</ul></li>
+<li><p><a href="https://www.inaturalist.org/projects/maryland-biodiversity-project">Maryland Biodiversity project data</a></p></li>
+<li><p>Global Biodiversity Information Facility</p>
+<ul>
+<li><a href="https://www.gbif.org/occurrence/search?dataset_key=50c9509d-22c7-4a22-a47d-8c48425ef4a7">iNaturalist Research-Grade Observations</a></li>
+</ul></li>
+</ol>
+<aside class="notes">
+<p>Open-source data created by users</p>
+<ol type="1">
+<li>Free to use</li>
+<li>Creates online community</li>
+<li>Projects are used to record biodiversity inventories of varying scopes</li>
+</ol>
+<p>Each organization structures data differently. iNat houses original user data, whereas GBIF hosts data from numerous publishers. So, iNat data has a lot of user attribute data whereas GBIF has alot of different taxonomic attributes attached to a each observation</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="resources" class="slide level2">
 <h2>Resources</h2>
 <ul>
-<li><p>What packages,</p></li>
-<li><p>templates,</p></li>
-<li><p>other resources</p></li>
-</ul>
-</section>
-<section id="challenges" class="slide level2">
-<h2>Challenges</h2>
+<li>rinat, rgbif (Accessing data through APIs)</li>
+<li>tidyverse (For tidying data)
 <ul>
-<li>What challenges did you encounter in making use of these resources and this data?</li>
+<li>dplyr, tidyr, ggplot2, sf, readr</li>
+</ul></li>
+<li>janitor</li>
+<li>mapboxapi (base maps)</li>
+<li>DataCamp, package documentation, iNaturalist and GBIF API documentation</li>
 </ul>
-<h3 id="section-1"></h3>
+</section></section>
+<section id="challenges" class="title-slide slide level1 center">
+<h1>Challenges</h1>
 <ul>
-<li>What do you think your project does well?</li>
-</ul>
-</section>
-<section id="approaches-or-ideas-for-the-future" class="slide level2">
-<h2>Approaches or ideas for the future</h2>
-<p>Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <a href="https://quarto.org/docs/presentations/" class="uri">https://quarto.org/docs/presentations/</a>.</p>
-</section>
-<section id="bullets" class="slide level2">
-<h2>Bullets</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes:</p>
+<li>What challenges did you encounter in making use of these resources and this data?
 <ul>
-<li>Content authored with markdown</li>
-<li>Output from executable code</li>
+<li><p>Learning R syntax and tools</p></li>
+<li><p>Understanding how to apply package documentation</p></li>
+<li><p>Wrapping my head around how to create a project workflow</p></li>
+</ul></li>
 </ul>
+<aside class="notes">
+<ul>
+<li>What is actually happening when I run a line of code, and how do I fix it if it doesn’t work?</li>
+<li>The proper order in which to perform data transformations</li>
+<li>ei.: df -&gt; sf -&gt; then transform crs</li>
+<li>ggplot aesthetics in particular</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="code" class="slide level2">
-<h2>Code</h2>
-<p>When you click the <strong>Render</strong> button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
+
+<section id="small-wins" class="title-slide slide level1 center">
+<h1>Small Wins</h1>
+<ul>
+<li>I feel much more confident using R as a whole</li>
+<li>I learned alot about iNaturalist and GBIF</li>
+<li>Working with R packages that would with APIs</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Gained experience using online documentation to troubleshoot errors</li>
+<li>Learned project documentation skills</li>
+<li>Created data visualizations of iNaturalist data</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="approaches-or-ideas-for-the-future" class="title-slide slide level1 center">
+<h1>Approaches or ideas for the future</h1>
+<ul>
+<li>Narrow scope of project down to one dataset</li>
+<li>Develop a workflow for answers broader questions about data structure</li>
+<li>Then implement workflow with more datasets</li>
+</ul>
+<aside class="notes">
+<p>I thought I was starting with a really simple idea that could be built upon further down the line, but what I actually did was start with a slab of marble and chipped away small pieces</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="footer footer-default">
 
 </div>
@@ -600,48 +707,6 @@
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          // dispatch for htmlwidgets
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for reveal
-        if (window.Reveal) {
-          window.Reveal.addEventListener("slidechanged", function(event) {
-            fireSlideChanged(event.previousSlide, event.currentSlide);
-          });
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
