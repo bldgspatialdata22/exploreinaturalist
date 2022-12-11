@@ -19,6 +19,7 @@ coastal_researchgrade <- readr::read_rds(here::here("data/coastal_researchgrade.
 piedmont_researchgrade <- readr::read_rds(here::here("data/piedmont_researchgrade.rds"))
 biodiv_researchgrade <- readr::read_rds(here::here("data/biodiv_researchgrade.rds"))
 GBIF_sm <- readr::read_rds(here::here("data/GBIF_sm.rds"))
+GBIF_kingdoms <- readr::read_rds(here::here("data/GBIF_kingdoms.rds"))
 ```
 
 Introduction to the exploration:
@@ -27,24 +28,17 @@ Data from iNaturalist projects were retrieved using r package "rinat" directly f
 
 iNaturalist data was also retrieved via the Global Biodiversity Information Facility.
 
-```{r}
-# Set up base map
-maryland_map <-
-  ggplot() +
-  geom_sf(data = maryland_data, color = "black", fill = NA)
-#Plot research grade data as layer on base map
-
-maryland_map
-```
-
 iNaturalist has multiple projects that vary by geography:
 
 ```{r}
 # Coastal
 coastal_research_map <- ggplot() +
+# Use layer_static_mapbox() to set up base map
   mapboxapi::layer_static_mapbox(
+# Make sure to set location to the proper data
     location = coastal_researchgrade,
     style_url = "mapbox://styles/mapbox/light-v10") +
+# Set object aesthetics  
   geom_sf(
     mapping = aes(),
     color = "red",
@@ -52,14 +46,16 @@ coastal_research_map <- ggplot() +
     alpha = 0.3,
     shape = 4,
     data = coastal_researchgrade) +
+# Add appropriate title and caption
   labs(
     title = "Maryland Coastal Research Grade Observations",
     caption = "Data courtesy of iNaturalist: Master Naturalist Program - Coastal Plain \n project_id = 474")
-
+# View map and adjust aesthetics 
 coastal_research_map
+# Save map as .png file for referencing
 ggsave("coastal_research_map.png", plot = coastal_research_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
-#Piedmont
+# Piedmont
 piedmont_research_map <- ggplot() +
   mapboxapi::layer_static_mapbox(
     location = piedmont_researchgrade,
@@ -78,7 +74,7 @@ piedmont_research_map <- ggplot() +
 piedmont_research_map
 ggsave("piedmont_research_map.png", plot = piedmont_research_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
-#state biodiversity data
+# State biodiversity data
 biodiv_researchgrade_map <- ggplot() +
   mapboxapi::layer_static_mapbox(
     location = biodiv_researchgrade,
@@ -96,6 +92,16 @@ biodiv_researchgrade_map <- ggplot() +
 biodiv_researchgrade_map
 ggsave("biodiv_research_map.png", plot = biodiv_researchgrade_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
+
+Can multiple projects be presented in a single map?
+
+Combine multiple iNaturalist project data by creating a project variable which can be used as a color indicator when mapping.
+
+The \$project value will refer to the project's ID, in this case I'm using "Coastal" and "Piedmont".
+
+Create a new data.frame where both coastal and piedmont projects are included by using bind_rows().
+
+Now the data is ready to be plotted.
 
 ```{r}
 # Add a project indicator variable
@@ -127,7 +133,47 @@ masternat_map <- ggplot() +
     )
   
 masternat_map
-ggsave("mastnat_map.png", plot = masternat_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggsave("masternat_map.png", plot = masternat_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+```
+
+We can look at location and number of observations reported by each user
+
+```{r}
+
+# Use region_researchgrade data to plot the number of observations by users.
+# Use color aesthic to distinguish between observations for each project.
+masternat_user_plot <- 
+  ggplot(region_researchgrade, aes(user.login, fill = project)) +
+  geom_bar() +
+    scale_fill_brewer(
+    type = "qual",
+    palette = "Dark2",
+  ) +
+  coord_flip() +
+  guides(fill = "none") +
+  labs(title = "Observations per User by Project")
+
+masternat_user_plot
+ggsave("masternat_user_plot.png", plot = masternat_user_plot, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+
+masternat_user_map <- ggplot() +
+  mapboxapi::layer_static_mapbox(
+    location = region_researchgrade,
+    style_url = "mapbox://styles/mapbox/light-v10") +
+  geom_sf(
+    mapping = aes(color = user.login, shape = project),
+    size = 2,
+    alpha = 0.5,
+    data = region_researchgrade
+    ) +
+  # geom_sf_label() +
+  labs(
+    title = "Maryland Master Naturalist Observations by User",
+    caption = "Data combined from piedmont and coastal regional projects"
+    )
+  
+masternat_user_map
+ggsave("masternat__usermap.png", plot = masternat__user_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
 
 We can look at variation by kingdom, genus and species:
@@ -155,19 +201,19 @@ plants_vs_animals <-
 
 
 
-plants_vs_animals_bar <-
-  ggplot(plants_vs_animals, aes(x = kingdom, fill = kingdom)
-  ) +
-  geom_bar() +
-  scale_fill_brewer(
-    type = "qual",
-    palette = "Dark2") +
+#plants_vs_animals_bar <-
+#  ggplot(plants_vs_animals, aes(x = kingdom, fill = kingdom)
+#  ) +
+#  geom_() +
+#  scale_fill_brewer(
+#    type = "qual",
+#    palette = "Dark2") +
 #  guides(fill = "none") +
-   labs(title = "Plants vs Animals") +
-   geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black")
+#   labs(title = "Plants vs Animals") +
+#   geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black")
   
-plants_vs_animals_bar
-ggsave("plants_vs_animals_bar.png", plot = plants_vs_animals_bar, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+#plants_vs_animals_bar
+#ggsave("plants_vs_animals_bar.png", plot = plants_vs_animals_bar, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
 # Compute the position of labels
 #data <- plants_vs_animals %>% 
@@ -186,22 +232,22 @@ ggsave("plants_vs_animals_bar.png", plot = plants_vs_animals_bar, path = "C:/Use
 #  scale_fill_brewer(palette="Set1")
 
 #Other kingdoms
-minorities_kingdoms <- 
-  filter(
-    GBIF_sm, kingdom == c("Bacteria", "Chromista", "Fungi", "Protozoa", "Viruses"))
+#minorities_kingdoms <- 
+#  filter(
+#    GBIF_sm, kingdom == c("Bacteria", "Chromista", "Fungi", "Protozoa", "Viruses"))
 #bar chart
-minorities_kingdoms_bar <-
-  ggplot(minorities_kingdoms, aes(x = kingdom, fill = kingdom)
-  ) +
-  geom_bar() +
-  scale_fill_brewer(
-    type = "qual",
-    palette = "Dark2") +
+#minorities_kingdoms_bar <-
+#  ggplot(minorities_kingdoms, aes(x = kingdom, fill = kingdom)
+#  ) +
+#  geom_bar() +
+#  scale_fill_brewer(
+#    type = "qual",
+#    palette = "Dark2") +
 #  guides(fill = "none") +
-   labs(title = "Minority Kingdoms Observed") +
-   geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black")
+#   labs(title = "Minority Kingdoms Observed") +
+#   geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black")
 
-minorities_kingdoms_bar
+#minorities_kingdoms_bar
 ```
 
 Of the 84 unique bird species observed by users in Maryland, how many were corvids (crow family)?
@@ -253,4 +299,49 @@ MD_corvid_sightings <- ggplot() +
   )
 
 MD_corvid_sightings
+```
+
+```{r}
+# Create new data.frame containing only insect sightings
+MD_insects <-
+  GBIF_sm %>%
+  group_by(family) %>%
+  filter(class == "Insecta", !is.na(species))
+# What families of insects are most commonly sighted?
+MD_insects_by_family <- MD_insects %>%
+  summarise(max = max(family), n = n()) %>%
+  arrange(desc(n))
+# Nymphalidae	n = 3826
+# Noctuidae	 n = 3788	
+# Libellulidae	n = 2900
+# What are the least commonly sighted?
+# There 40 families of insects that have only been reported once
+
+MD_rare_insects_inc <- MD_insects_by_family %>%
+  filter(n == 1)
+  
+MD_rare_insects <- 
+  st_semi_join(MD_rare_insects_inc, MD_insects, by = NULL, copy = FALSE, na_matches = c("na", "never"))
+
+
+MD_rare_insects_map <- ggplot() +
+  mapboxapi::layer_static_mapbox(
+    location = MD_rare_insects,
+    style_url = "mapbox://styles/mapbox/light-v10") +
+  geom_sf(
+    data = MD_rare_insects,
+    aes(color = family),
+    shape = 4,
+    alpha = 0.25,
+    size = 0.5
+    ) +
+  scale_color_brewer(
+    type = "qual",
+    palette = "Set2"
+    ) +
+  theme(
+    legend.position = "bottom"
+  )
+
+MD_insect_sightings
 ```

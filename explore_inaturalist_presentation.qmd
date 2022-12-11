@@ -4,8 +4,6 @@ format: revealjs
 editor: visual
 ---
 
-![](deliverables/mastnat_map.png)
-
 # Initial goals for project
 
 1.  Improve skills in R.
@@ -25,8 +23,6 @@ editor: visual
 ::: notes
 Spent a lot of time learning how to use R, which data to work with, and exploring rinat and rgbif
 :::
-
-# ![](deliverables/biodiv_research_map.png)
 
 # Data sources
 
@@ -52,9 +48,6 @@ Open-source data created by users
 
 Each organization structures data differently. iNat houses original user data, whereas GBIF hosts data from numerous publishers. So, iNat data has a lot of user attribute data whereas GBIF has alot of different taxonomic attributes attached to a each observation
 :::
-
-# ![](deliverables/coastal_research_map.png)
-# ![](deliverables/piedmont_research_map.png)
 
 ## Resources
 
@@ -82,7 +75,7 @@ Each organization structures data differently. iNat houses original user data, w
 :::
 
 # ![](deliverables/GBIF_kingdoms_bar.png)
-# # ![](deliverables/plants_vs_animals_bar.png)
+# ![](deliverables/plants_vs_animals_bar.png)
 
 # Small Wins
 
@@ -95,6 +88,8 @@ Each organization structures data differently. iNat houses original user data, w
 -   Learned project documentation skills
 -   Created data visualizations of iNaturalist data
 :::
+
+# ![](deliverables/mastnat_map.png)
 
 # Approaches or ideas for the future
 

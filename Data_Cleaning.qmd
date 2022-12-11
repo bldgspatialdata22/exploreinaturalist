@@ -24,9 +24,6 @@ biodiv_obs <- readr::read_rds(here::here("data/biodiv_obs.rds"))
 maryland_data <- readr::read_rds(here::here("data/maryland_data.rds"))
 GBIF_MD_research_grade_FULL <-
   readr::read_tsv("data/GBIF_MD_research_grade.csv")
-
-#Define Coordinate Reference System that will later integrate with Mapbox basemap
-crs <- st_crs(3857)
 ```
 
 ### Inspect Data
@@ -42,7 +39,7 @@ crs <- st_crs(3857)
 ```{r}
 # Check out data
 # What is the data structure of each dataset?
-# Are they tibbles, dataframes, spatial dataframes?
+# Are they tibbles, data.frames, spatial data.frames?
 # If spatial, how are coordinates stored?
 #
 #MARYLAND MASTER NATURALIST COASTAL REGION PROJECT
@@ -270,4 +267,15 @@ GBIF_sm <-
 
 
 readr::write_rds(GBIF_sm, here::here("data/GBIF_sm.rds"))
+```
+
+```{r}
+GBIF_kingdoms <- 
+  GBIF_sm %>%
+  select(all_of(c(
+    "gbifID",
+    "kingdom"
+  )))
+
+readr::write_rds(GBIF_kingdoms, here::here("data/GBIF_kingdoms.rds"))
 ```
