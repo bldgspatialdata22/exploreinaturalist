@@ -22,8 +22,7 @@ piedmont_obs <- readr::read_rds(here::here("data/piedmont_obs.rds"))
 coastal_obs <- readr::read_rds(here::here("data/coastal_obs.rds"))
 biodiv_obs <- readr::read_rds(here::here("data/biodiv_obs.rds"))
 maryland_data <- readr::read_rds(here::here("data/maryland_data.rds"))
-GBIF_MD_research_grade_FULL <-
-  readr::read_tsv("data/GBIF_MD_research_grade.csv")
+GBIF_MD_research_grade_FULL <- readr::read_tsv("data/GBIF_MD_research_grade.csv")
 ```
 
 ### Inspect Data
@@ -173,7 +172,7 @@ Additional columns were kept for GBIF occurrence data, which does not exist in d
 # Coastal
 coastal_sm <-
   coastal_3857 %>%
-  select(all_of(c(
+  tidyselect::select(all_of(c(
     "id",
     "observed_on",
     "taxon_id",
@@ -187,7 +186,7 @@ coastal_sm <-
 
 # Filter dataframe down to research quality observations
 coastal_researchgrade <-
-  filter(
+  dplyr::filter(
     coastal_sm, quality_grade == "research",
     captive == "FALSE"
   )
@@ -196,7 +195,7 @@ readr::write_rds(coastal_researchgrade, here::here("data/coastal_researchgrade.r
 # Piedmont
 piedmont_sm <-
   piedmont_3857 %>%
-  select(all_of(c(
+  tidyselect::select(all_of(c(
     "id",
     "observed_on",
     "taxon_id",
@@ -209,7 +208,7 @@ piedmont_sm <-
   )))
 # Filter dataframe down to research quality observations
 piedmont_researchgrade <-
-  filter(
+  dplyr::filter(
     piedmont_sm, quality_grade == "research",
     captive == "FALSE"
   )
@@ -218,7 +217,7 @@ readr::write_rds(piedmont_researchgrade, here::here("data/piedmont_researchgrade
 # Biodiversity data
 biodiv_sm <-
   biodiv_3857 %>%
-  select(all_of(c(
+  tidyselect::select(all_of(c(
     "id",
     "observed_on",
     "taxon_id",
@@ -232,7 +231,7 @@ biodiv_sm <-
 
 # Filter dataframe down to research quality observations
 biodiv_researchgrade <-
-  filter(
+  dplyr::filter(
     biodiv_sm, quality_grade == "research",
     captive == "FALSE"
   )
@@ -248,7 +247,7 @@ GBIF_sf <- sf::st_as_sf(GBIF_MD_research_grade_FULL, coords = c("decimalLongitud
 GBIF_3857 <- 
   sf::st_transform(GBIF_sf, crs = 3857)
 
-st_crs(GBIF_3857)
+sf::st_crs(GBIF_3857)
 
 GBIF_sm <-
   GBIF_3857 %>%
@@ -272,7 +271,7 @@ readr::write_rds(GBIF_sm, here::here("data/GBIF_sm.rds"))
 ```{r}
 GBIF_kingdoms <- 
   GBIF_sm %>%
-  select(all_of(c(
+  tidyselect::select(all_of(c(
     "gbifID",
     "kingdom"
   )))

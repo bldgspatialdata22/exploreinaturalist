@@ -8,6 +8,7 @@ editor: visual
 #install.packages("mapboxapi")
 #install.packages("ggspatial")
 
+library(readr) # R package for reading and writing data
 library(sf) # R package for handling simple feature objects
 library(ggplot2) # R package for creating plots and maps
 library(dplyr) # R package for data manipulation
@@ -111,7 +112,7 @@ piedmont_researchgrade$project <- "Piedmont"
 
 # Combine project data into a single sf object
 region_researchgrade <-
-  bind_rows(
+  dplyr::bind_rows(
     coastal_researchgrade,
     piedmont_researchgrade
     )
@@ -184,7 +185,7 @@ piedmont_user_map <- ggplot() +
 piedmont_user_map
 #FIXME: adjust caption to fit in whitespace
 
-ggsave("piedmont_usermap.png", plot = piedmont_user_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggsave("piedmont_user_map.png", plot = piedmont_user_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
 # Filter out observations from the user with the most observations according to masternat_user_plot
 mmn_noriko_obs <- 
@@ -376,11 +377,16 @@ MD_corvid_sightings <- ggplot() +
     type = "qual",
     palette = "Set1"
     ) +
+  labs(
+    title = "Crows and Blue Jays in Maryland",
+    caption = "Data provided by iNaturalist Research-Grade Observations via GBIF"
+  ) +
   theme(
     legend.position = "bottom"
   )
 
 MD_corvid_sightings
+ggsave("MD_corvid_sightings.png", plot = MD_corvid_sightings, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
 
 ```{r gbif_insects}

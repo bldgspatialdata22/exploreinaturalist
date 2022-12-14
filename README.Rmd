@@ -11,25 +11,81 @@ knitr::opts_chunk$set(
 )
 ```
 
-# final project
+# Explore iNaturalist
+
+## Introduction
+
+This repository houses my final project for GES 600: Building Spatial Datasets. Explore iNaturalist is an exercise in using RStudio to explore open-source spatial datasets.
+
+The goal of exploreinaturalist is to provide an introductory exploratory analysis of iNaturalist data.
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of final project is to ...
+## Background
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+### iNaturalist
 
-```{r cars}
-summary(cars)
+[iNaturalist](https://www.inaturalist.org/) is an online social platform used to report and identify biological observations for the purpose of creating high quality biodiversity data. Use of iNaturalist is completely free, however you must sign up for an account.
+
+Users can report observations via the iNaturalist app or by filling out the [observation form](https://www.inaturalist.org/observations/upload) on the website. Users have a multitude of options for details to include when submitting observations, including physical description, geolocation, and photos. iNaturalist uses reported or estimated geolocation to plot observation maps.
+
+![Image provided by iNaturalist - Getting Started](https://static.inaturalist.org/wiki_page_attachments/492-original.png)
+
+Users can report their findings independently or within a group project, or [bioblitz](https://www.inaturalist.org/pages/bioblitz+guide). The goal of these projects is to produce biodiversity surveys, which may be location specific or temporally-restricted. When a curator creates a project they choose a set of requirements for reported observations, in order to create a scientific standard for data collection.
+
+![Image provided by iNaturalist - Managing Projects](images/Screen%20Shot%202018-06-18%20at%209.39.08%20PM.png)
+
+### GBIF
+
+The Global Biodiversity Information Facility (GBIF) is an internationally funded network and data infrastructure of biodiversity data. GBIF has a similar mission to iNaturalist, providing users to access to data from participating organizations -- iNaturalist is one of these organizations. GBIF has its own set of data standards, so there are discrepencies between iNaturalist data retrieved from GBIF versus iNaturalist directly.
+
+## Working with iNat Data
+
+### Accessing Data
+
+iNaturalist data can be accessed using the iNat or GBIF APIs. Observations can be directly downloaded from the websites after using specified parameters to filter the data, or choosing a specific project. Data can also be accessed using rPackages [rinat](https://github.com/ropensci/rinat) and [rgbif](https://github.com/ropensci/rgbif).
+
+I chose to look at observations specifically in Maryland and explored what projects were out there via the iNaturalist website. Therefore, I used `get_inat_obs_project()` to pull in data, since I already knew what project data I wanted. `rinat` also has functions to perform observation searches in R.
+
+`rgbif` provides a slew of functions to search for occurrences, to retrieve data from GBIF. However, the occurrence search on the GBIF website is beautifully streamlined and I found it more intuitive than searching for data through R. In addition, the GBIF API has a 10,000 occurrence download limitation, so if working with large datasets you can submit a download request. Once the [download request](https://www.gbif.org/occurrence/download/request) is accepted you'll receive an email with a zip file for your data.
+
+```{r access_data, eval = FALSE}
+rinat::get_inat_obs_project("maryland-master-naturalist-program-piedmont-region", type = "observations")
+#or
+rgbif::occ_search(
+    taxonKey = NULL,
+    scientificName = NULL,
+    country = "US",
+    datasetKey = "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+    hasCoordinate = TRUE,
+    hasGeospatialIssue = FALSE,
+    occurrenceStatus = "present",
+    stateProvince = "Maryland"
+  )
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+### Transforming Data
 
-You can also embed plots, for example:
+iNaturalist data comes in with 75 variables and will need to be honed down to the variables you want to work with. In comparison, GBIF data comes in with 88 variables. Again, these variables are not consistent between iNat and GBIF, so consider tidying column names before analyzing data.
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
+Also note, geolocations are reported in lat/lon decimal format in corresponding variables.
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub.
+### Data Analysis and Visualizations
+
+You can visualize where each user reported observations within a project:
+
+![](deliverables/piedmont_user_map.png)
+
+You can visualize the spatial boundaries of projects:
+
+![](deliverables/masternat_map.png)
+
+You can look at the breakdown of observations per biological kingdom:
+
+![](deliverables/GBIF_kingdoms_bar.png)
+
+You filter down observations by taxa and look at observation spatial distributions:
+
+![](deliverables/MD_corvid_sightings.png)

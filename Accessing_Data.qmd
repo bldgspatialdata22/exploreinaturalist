@@ -25,20 +25,15 @@ After testing out certain functions from the rinat package, I decided to use `ge
 ```{r}
 # Access selected iNaturalist projects' observations using rinat::get_inat_obs_project()
 # Assign data unique name
-piedmont_obs <- get_inat_obs_project("maryland-master-naturalist-program-piedmont-region", type = "observations")
+piedmont_obs <- rinat::get_inat_obs_project("maryland-master-naturalist-program-piedmont-region", type = "observations")
 # Save data to local folder
 readr::write_rds(piedmont_obs, here::here("data/piedmont_obs.rds"))
 #Repeat for coastal project
-coastal_obs <- get_inat_obs_project("maryland-master-naturalist-program-coastal-plain", type = "observations")
+coastal_obs <- rinat::get_inat_obs_project("maryland-master-naturalist-program-coastal-plain", type = "observations")
 readr::write_rds(coastal_obs, here::here("data/coastal_obs.rds"))
 #Repeat for biodiversity data
-biodiv_obs <- get_inat_obs_project("biodiversity-of-maryland", type = "observations")
+biodiv_obs <- rinat::get_inat_obs_project("biodiversity-of-maryland", type = "observations")
 readr::write_rds(biodiv_obs, here::here("data/biodiv_obs.rds"))
-
-data("us_states")
-maryland_data <- dplyr::filter(us_states, NAME == "Maryland")
-
-readr::write_rds(maryland_data, here::here("data/maryland_data.rds"))
 ```
 
 ### Perform GBIF Occurrence Search
