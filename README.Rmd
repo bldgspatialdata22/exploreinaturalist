@@ -5,7 +5,6 @@ output: github_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  fig.path = "man/figures/README-",
   comment = "#>"
 )
 ```
@@ -17,10 +16,6 @@ knitr::opts_chunk$set(
 This repository houses my final project for GES 600: Building Spatial Datasets. Explore iNaturalist is an exercise in using RStudio to explore open-source spatial datasets.
 
 The goal of exploreinaturalist is to provide an introductory exploratory analysis of iNaturalist data.
-
-<!-- badges: start -->
-
-<!-- badges: end -->
 
 ## Background
 
@@ -85,6 +80,22 @@ You can look at the breakdown of observations per biological kingdom:
 
 ![](deliverables/GBIF_kingdoms_bar.png)
 
-You filter down observations by taxa and look at observation spatial distributions:
+You can filter down observations by taxa and look at observation spatial distributions:
 
 ![](deliverables/MD_corvid_sightings.png)
+
+## Next Tasks
+
+Beyond exploring iNaturalist project data attributes, how can this publicly-sourced biodiversity data be used?
+
+Does this data hold value as evidence for making informed conservation action plans and policy decisions?
+
+In order to assess the value of iNaturalist data, I propose doing a comparative analysis between iNaturalist data and other standardized biodiversity survey data, with standards that were developed specifically to inform decision-making. Some examples specifically for Maryland include: [Maryland iMap](https://imap.maryland.gov/) and [Maryland Open Data](https://opendata.maryland.gov/).
+
+Things to compare would be:
+
+-   locations of observations (spatial patterns)
+
+-   level of confidence in identification
+
+-   photo or other media evidence associated with observation

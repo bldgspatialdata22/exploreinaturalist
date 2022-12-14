@@ -132,7 +132,8 @@ masternat_map <- ggplot() +
   labs(
     title = "Maryland Master Naturalist Research Grade Observations",
     caption = "Data combined from piedmont and coastal regional projects"
-    )
+    ) +
+  ggplot2::theme_classic()
   
 masternat_map
 ggsave("masternat_map.png", plot = masternat_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
@@ -158,7 +159,7 @@ masternat_user_plot <-
   ) +
 # Add legend
   guides(fill = guide_legend(title = "Project")) +
-  theme_classic()
+  ggplot2::theme_classic()
 
 masternat_user_plot
 
@@ -180,7 +181,7 @@ piedmont_user_map <- ggplot() +
     title = "Maryland Master Naturalist Observations by User\nPiedmont Region",
     caption =  "Data courtesy of iNaturalist: Master Naturalist Program - Piedmont Region\nproject_id = 1396"
     ) +
-  theme_classic()
+  ggplot2::theme_classic()
   
 piedmont_user_map
 #FIXME: adjust caption to fit in whitespace
@@ -205,7 +206,7 @@ topuser_piedmont <- ggplot() +
     title = "Top User's Observations in MD Piedmont Region",
     caption = 'User "mmn_noriko" reported 2110 research grade observations\n for the Maryland Master Naturalist Piedmont Region iNaturalist Project'
   ) +
-  theme_classic()
+  ggplot2::theme_classic()
 
 topuser_piedmont
 #FIXME: Center title label, change colors of points, increase transparency
@@ -222,15 +223,18 @@ coastal_user_map <- ggplot() +
     size = 2,
     alpha = 0.5,
     data = coastal_researchgrade
+    ) +  
+  guides(fill = guide_legend(ncol = 2)
     ) +
 # Add labels
   labs(
     title = "Maryland Master Naturalist Observations by User\nCoastal Region",
     caption = "Data courtesy of iNaturalist: Master Naturalist Program - Coastal Plain \n project_id = 474"
     ) +
-  theme_classic()
+  ggplot2::theme_classic()
   
 coastal_user_map
+#FIXME: Make legend two columns
 ggsave("coastal_usermap.png", plot = coastal_user_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
 # Filter out observations from the user with the most observations according to masternat_user_plot
@@ -240,19 +244,30 @@ tonyiajohnson_obs <-
 topuser_coastal <- ggplot() +
   mapboxapi::layer_static_mapbox(
     location = tonyiajohnson_obs,
-    style_url = "mapbox://styles/mapbox/light-v10") +
+    style_url = "mapbox://styles/mapbox/light-v10"
+    ) +
   geom_sf(
     mapping = aes(color = observation_photos_count),
     size = 2,
     alpha = 0.5,
-    data = tonyiajohnson_obs) +
+    data = tonyiajohnson_obs
+    ) +
+  coord_sf(xlim = c(-75.0, -78.0), ylim = c(38.0, 40.0)) +
+  scale_fill_brewer(
+    type = "seq",
+    palette = "OrRd"
+    ) +
   labs(
     title = "Top User's Observations in MD Coastal Region",
     caption = 'User "tonyiajohnson" reported 2110 research grade observations\n for the Maryland Master Naturalist Coastal Region iNaturalist Project'
-  ) +
-  theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0)) 
-#FIXME: adjust label positions, widen bounding box
+    ) +
+  ggplot2::theme_classic() +
+  ggplot2::theme(
+    axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0)) 
+
 topuser_coastal
+#FIXME: adjust label positions, widen x-limits
+ggsave("topuser_coastal.png", plot = topuser_coastal, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
 
 We can look at variation by kingdom, genus and species:
@@ -264,12 +279,21 @@ GBIF_kingdoms_bar<-
   geom_bar() +
     scale_fill_brewer(
     type = "qual",
-    palette = "Dark2",
+    palette = "Dark2"
   ) +
   guides(fill = "none") +
   labs(title = "Maryland Biodiversity by Kingdom") +
-  geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black") +
-  theme_classic()
+  geom_text(aes(
+    label = ..count..), 
+    stat = "count", 
+    vjust = -0.2, 
+    colour = "black"
+  ) +
+  labs(
+    title = "Distribution of Observations by Kingdom",
+    caption = "Data courtesy of iNaturalist Research-Grade Observations via GBIF"
+  ) +
+  ggplot2::theme_classic()
 
 GBIF_kingdoms_bar
 #FIXME: Center title position
@@ -307,8 +331,8 @@ plants_vs_animals <-
 #ggplot(data, aes(x="", y=prop, fill=group)) +
 #  geom_bar(stat="identity", width=1, color="white") +
 #  coord_polar("y", start=0) +
-#  theme_void() + 
-#  theme(legend.position="none") +
+#  ggplot2::theme_void() + 
+#  ggplot2::theme(legend.position="none") +
   
 #  geom_text(aes(y = ypos, label = group), color = "white", size=6) +
 #  scale_fill_brewer(palette="Set1")
@@ -355,7 +379,7 @@ MD_corvids_bar <-
   ) +
   guides(fill = "none") +
   coord_flip() +
-  theme_classic()
+  ggplot2::theme_classic()
 
 MD_corvids_bar
 ```
@@ -379,13 +403,15 @@ MD_corvid_sightings <- ggplot() +
     ) +
   labs(
     title = "Crows and Blue Jays in Maryland",
-    caption = "Data provided by iNaturalist Research-Grade Observations via GBIF"
+    caption = "Data courtesy of iNaturalist Research-Grade Observations via GBIF"
   ) +
-  theme(
+  ggplot2::theme_classic() +
+  ggplot2::theme(
     legend.position = "bottom"
   )
 
 MD_corvid_sightings
+#FIXME: Center title position
 ggsave("MD_corvid_sightings.png", plot = MD_corvid_sightings, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
 
@@ -393,12 +419,12 @@ ggsave("MD_corvid_sightings.png", plot = MD_corvid_sightings, path = "C:/Users/K
 # Create new data.frame containing only insect sightings
 MD_insects <-
   GBIF_sm %>%
-  group_by(family) %>%
-  filter(class == "Insecta", !is.na(species))
+  dplyr::group_by(family) %>%
+  dplyr::filter(class == "Insecta", !is.na(species))
 # What families of insects are most commonly sighted?
 MD_insects_by_family <- MD_insects %>%
-  summarise(max = max(family), n = n()) %>%
-  arrange(desc(n))
+  dplyr::summarise(max = max(family), n = n()) %>%
+  dplyr::arrange(desc(n))
 # Nymphalidae	n = 3826
 # Noctuidae	 n = 3788	
 # Libellulidae	n = 2900
@@ -407,7 +433,7 @@ MD_insects_by_family <- MD_insects %>%
 #
 # Filter the sf data.frame down to the 40 insect families with single reportings (n = 1)
 MD_rare_insects_inc <- MD_insects_by_family %>%
-  filter(n == 1)
+  dplyr::filter(n == 1)
 # Drop geometry before performing join
 MD_rare_insects_df <- sf::st_drop_geometry(MD_rare_insects_inc)
 # Perform left join where x = MD_rare_insects and y = MD_insects, resulting in a data.frame of 40 rows x 12 columns.   
@@ -432,7 +458,12 @@ MD_rare_insects_map <- ggplot() +
     type = "qual",
     palette = "Set2"
     ) +
-  theme(
+  labs(
+    title = "Rare Sightings of Insects in Maryland",
+    caption = "Plotted are 40 unique insect species reported by users in Maryland on iNaturalist.\nNote: The rarity of these insect species have not been cross-referenced with ICUN Red List."
+  ) +
+  ggplot2::theme_classic() + 
+  ggplot2::theme(
     legend.position = "none"
   )
 
