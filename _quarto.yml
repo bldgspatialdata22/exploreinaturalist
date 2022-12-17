@@ -5,10 +5,14 @@ website:
   title: "Explore iNaturalist"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
-
+      - href: project-documentation.qmd
+        text: Project Documentation
+      - href: Accessing_data.qmd
+        text: Data Cleaning
+      - href: Data_Cleaning.qmd
+        text: Data Cleaning
+      - href: Data_Exploration.qmd
+        text: Data Exploration
 format:
   html:
     theme: cosmo

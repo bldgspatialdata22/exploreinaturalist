@@ -36,10 +36,10 @@ After testing out certain functions from the rinat package, I decided to use `ge
 piedmont_obs <- rinat::get_inat_obs_project("maryland-master-naturalist-program-piedmont-region", type = "observations")
 # Save data to local folder
 readr::write_rds(piedmont_obs, here::here("data/piedmont_obs.rds"))
-#Repeat for coastal project
+# Repeat for coastal project
 coastal_obs <- rinat::get_inat_obs_project("maryland-master-naturalist-program-coastal-plain", type = "observations")
 readr::write_rds(coastal_obs, here::here("data/coastal_obs.rds"))
-#Repeat for biodiversity data
+# Repeat for biodiversity data
 biodiv_obs <- rinat::get_inat_obs_project("biodiversity-of-maryland", type = "observations")
 readr::write_rds(biodiv_obs, here::here("data/biodiv_obs.rds"))
 ```
@@ -110,5 +110,5 @@ An alternative to using `occ_search()` or another rgbif function in order to pul
 #
 # Read in GBIF data from csv using read_tsv()
 GBIF_MD_research_grade_FULL <-
-  readr::read_tsv("C:/Users/Kari/Documents/GitHub/exploreinaturalist/data/GBIF_MD_research_grade.csv")
+  readr::read_tsv("data/GBIF_MD_research_grade.csv")
 ```

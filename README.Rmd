@@ -47,17 +47,17 @@ I chose to look at observations specifically in Maryland and explored what proje
 
 ```{r access_data, eval = FALSE}
 rinat::get_inat_obs_project("maryland-master-naturalist-program-piedmont-region", type = "observations")
-#or
+# or
 rgbif::occ_search(
-    taxonKey = NULL,
-    scientificName = NULL,
-    country = "US",
-    datasetKey = "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
-    hasCoordinate = TRUE,
-    hasGeospatialIssue = FALSE,
-    occurrenceStatus = "present",
-    stateProvince = "Maryland"
-  )
+  taxonKey = NULL,
+  scientificName = NULL,
+  country = "US",
+  datasetKey = "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+  hasCoordinate = TRUE,
+  hasGeospatialIssue = FALSE,
+  occurrenceStatus = "present",
+  stateProvince = "Maryland"
+)
 ```
 
 ### Transforming Data

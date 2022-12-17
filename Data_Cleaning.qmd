@@ -2,6 +2,8 @@
 title: "Data Cleaning"
 format: html
 editor: visual
+execute: 
+  eval: false
 ---
 
 ```{r, include = FALSE}
@@ -17,11 +19,10 @@ knitr::opts_chunk$set(
 Install required packages and libraries for cleaning data.
 
 ```{r setup}
-
 # install.packages("tidyverse")
 library(readr) # R package for reading and writing files locally
 library(dplyr) # R package for data manipulation
-library(sf) #R package for handling simple feature spatial data
+library(sf) # R package for handling simple feature spatial data
 library(tidyr) # R package for creating tidy data
 library(janitor) # R package with tools for examining and cleaning data
 
@@ -49,32 +50,32 @@ GBIF_MD_research_grade_FULL <- readr::read_tsv("data/GBIF_MD_research_grade.csv"
 # Are they tibbles, data.frames, spatial data.frames?
 # If spatial, how are coordinates stored?
 #
-#MARYLAND MASTER NATURALIST COASTAL REGION PROJECT
+# MARYLAND MASTER NATURALIST COASTAL REGION PROJECT
 head(coastal_obs)
-#returns first 6 rows of dataframe
+# returns first 6 rows of dataframe
 summary(coastal_obs)
 sf::st_crs(coastal_obs)
-#crs = NA
+# crs = NA
 # What are the column names?
 colnames(coastal_obs)
-#MARYLAND MASTER NATURALIST PIEDMONT REGION PROJECT
+# MARYLAND MASTER NATURALIST PIEDMONT REGION PROJECT
 head(piedmont_obs)
 summary(piedmont_obs)
 sf::st_crs(piedmont_obs)
-#crs = NA
+# crs = NA
 #
-#MARYLAND BIODIVERSITY PROJECT
+# MARYLAND BIODIVERSITY PROJECT
 head(biodiv_obs)
 summary(biodiv_obs)
 sf::st_crs(biodiv_obs)
-#crs = NA
+# crs = NA
 #
-#GBIF RESEARCH-GRADE, MARYLAND iNATURALIST OBSERVATIONS
+# GBIF RESEARCH-GRADE, MARYLAND iNATURALIST OBSERVATIONS
 head(GBIF_MD_research_grade_FULL)
-#It is a tibble dataframe
+# It is a tibble dataframe
 summary(GBIF_MD_research_grade_FULL)
 sf::st_crs((GBIF_MD_research_grade_FULL))
-#crs = NA
+# crs = NA
 ```
 
 The janitor function `compare_df_cols_same()` when `bind_method = "rbind"` returns a data frame where column names and data types are more easily comparible.
@@ -124,7 +125,7 @@ piedmont_obs_drop_na <- piedmont_obs %>%
 # Convert iNaturalist dataframes into sf objects
 piedmont_obs_sf <- sf::st_as_sf(piedmont_obs_drop_na, coords = c("longitude", "latitude"), crs = 4269)
 
-piedmont_3857 <- 
+piedmont_3857 <-
   sf::st_transform(piedmont_obs_sf, crs = 3857)
 
 st_crs(piedmont_3857)
@@ -200,6 +201,7 @@ coastal_researchgrade <-
   )
 
 readr::write_rds(coastal_researchgrade, here::here("data/coastal_researchgrade.rds"))
+
 # Piedmont
 piedmont_sm <-
   piedmont_3857 %>%
@@ -214,6 +216,7 @@ piedmont_sm <-
     "quality_grade",
     "captive"
   )))
+
 # Filter dataframe down to research quality observations
 piedmont_researchgrade <-
   dplyr::filter(
@@ -222,6 +225,7 @@ piedmont_researchgrade <-
   )
 
 readr::write_rds(piedmont_researchgrade, here::here("data/piedmont_researchgrade.rds"))
+
 # Biodiversity data
 biodiv_sm <-
   biodiv_3857 %>%
@@ -252,7 +256,7 @@ GBIF Data
 ```{r}
 GBIF_sf <- sf::st_as_sf(GBIF_MD_research_grade_FULL, coords = c("decimalLongitude", "decimalLatitude"), crs = 4269)
 
-GBIF_3857 <- 
+GBIF_3857 <-
   sf::st_transform(GBIF_sf, crs = 3857)
 
 sf::st_crs(GBIF_3857)
@@ -277,7 +281,7 @@ readr::write_rds(GBIF_sm, here::here("data/GBIF_sm.rds"))
 ```
 
 ```{r}
-GBIF_kingdoms <- 
+GBIF_kingdoms <-
   GBIF_sm %>%
   dplyr::select(all_of(c(
     "gbifID",
