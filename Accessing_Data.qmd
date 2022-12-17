@@ -4,11 +4,19 @@ format: html
 editor: visual
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warnings = FALSE
+)
+```
+
 ## How to Access project data from iNaturalist.org:
 
 Install required packages and libraries for accessing data.
 
-```{r setup}
+```{r setup, }
 # remotes::install_github("ropensci/rinat")
 # remotes::install_github("ropensci/rgbif")
 library(tidyverse)
@@ -22,7 +30,7 @@ library(spData) # R package for importing US states data
 
 After testing out certain functions from the rinat package, I decided to use `get_inat_obs_project()` to retrieve data through the iNaturalist API. I chose three citizen science projects within the state of Maryland. iNaturalist allows project administrators to control the level of detail users are required to report in order for an observation to be included in the project dataset. Project admins are also able to privatize their project's data. These three projects varying levels of observation detail, however data are accessible to any public user.
 
-```{r}
+```{r, eval=FALSE}
 # Access selected iNaturalist projects' observations using rinat::get_inat_obs_project()
 # Assign data unique name
 piedmont_obs <- rinat::get_inat_obs_project("maryland-master-naturalist-program-piedmont-region", type = "observations")
@@ -46,7 +54,7 @@ Another tricky part of using `occ_search()` is searching by `datasetKey` , which
 
 Although GBIF's online search tool is more extensive and user-friendly than iNaturalist's observation search tool, and I prefer using the GBIF hub in order to retrieve full datasets, it definitely requires familiarizing yourself with each search parameter.
 
-```{r}
+```{r, eval=FALSE}
 # Access iNaturalist data from GBIF using rgbif::occ_search()
 #
 # Recreate data occurance search done on website with the following filters:
@@ -94,7 +102,7 @@ GBIF_MD_research_grade_2022 <-
 
 An alternative to using `occ_search()` or another rgbif function in order to pull data into R directly from GBIF is to [request a download](https://www.gbif.org/occurrence/download) after performing an occurrence search on the website. This also allows you to get around the 10,000 occurrence download limitation of the GBIF Occurrence API. You'll have to wait for GBIF to fulfill your download request, and the request will take longer for larger datasets, however the turnaround is usually 24 hours or less and your download is retrievable for six-months.
 
-```{r}
+```{r, eval=FALSE}
 # Data can also be accessed from GBIF via downloading tsv files.
 # The former method offers a glimpse at the dataset
 # whereas downloading the csv provides the dataset in its entireity.

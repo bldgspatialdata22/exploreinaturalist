@@ -1,7 +1,16 @@
 ---
 title: "Data Exploration"
+format: html
 editor: visual
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warnings = FALSE
+)
+```
 
 ```{r setup}
 
@@ -41,7 +50,7 @@ coastal_research_map <- ggplot() +
     location = coastal_researchgrade,
     style_url = "mapbox://styles/mapbox/light-v10") +
 # Set object aesthetics  
-  geom_sf(
+  ggplot2::geom_sf(
     mapping = aes(),
     color = "red",
     size = 2,
@@ -55,14 +64,14 @@ coastal_research_map <- ggplot() +
 # View map and adjust aesthetics 
 coastal_research_map
 # Save map as .png file for referencing
-ggsave("coastal_research_map.png", plot = coastal_research_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggplot2::ggsave("coastal_research_map.png", plot = coastal_research_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
 # Piedmont
 piedmont_research_map <- ggplot() +
   mapboxapi::layer_static_mapbox(
     location = piedmont_researchgrade,
     style_url = "mapbox://styles/mapbox/light-v10") +
-  geom_sf(
+  ggplot2::geom_sf(
     mapping = aes(),
     color = "blue",
     size = 2,
@@ -74,14 +83,14 @@ piedmont_research_map <- ggplot() +
     caption = "Data courtesy of iNaturalist: Master Naturalist Program - Piedmont Region \n project_id = 1396")
 
 piedmont_research_map
-ggsave("piedmont_research_map.png", plot = piedmont_research_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggplot2::ggsave("piedmont_research_map.png", plot = piedmont_research_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
 # State biodiversity data
 biodiv_researchgrade_map <- ggplot() +
   mapboxapi::layer_static_mapbox(
     location = biodiv_researchgrade,
     style_url = "mapbox://styles/mapbox/light-v10") +
-  geom_sf(
+  ggplot2::geom_sf(
     mapping = aes(),
     size = 2,
     alpha = 0.3,
@@ -89,10 +98,11 @@ biodiv_researchgrade_map <- ggplot() +
     data = biodiv_researchgrade) +
   labs(
     title = "Maryland Biodiversity Research Grade Observations",
-    caption = "Data courtesy of iNaturalist: Maryland Biodiversity Project \n project_id = 17241")
+    caption = "Data courtesy of iNaturalist: Maryland Biodiversity Project \n project_id = 17241") +
+  ggplot2::theme_classic()
 
 biodiv_researchgrade_map
-ggsave("biodiv_research_map.png", plot = biodiv_researchgrade_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggplot2::ggsave("biodiv_research_map.png", plot = biodiv_researchgrade_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
 
 Can multiple projects be presented in a single map?
@@ -121,14 +131,14 @@ masternat_map <- ggplot() +
   mapboxapi::layer_static_mapbox(
     location = region_researchgrade,
     style_url = "mapbox://styles/mapbox/light-v10") +
-  geom_sf(
+  ggplot2::geom_sf(
     mapping = aes(color = project),
     size = 1,
     alpha = 0.5,
     shape = 4,
     data = region_researchgrade
     ) +
-  # geom_sf_label() +
+  # ggplot2::geom_sf_label() +
   labs(
     title = "Maryland Master Naturalist Research Grade Observations",
     caption = "Data combined from piedmont and coastal regional projects"
@@ -136,7 +146,7 @@ masternat_map <- ggplot() +
   ggplot2::theme_classic()
   
 masternat_map
-ggsave("masternat_map.png", plot = masternat_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggplot2::ggsave("masternat_map.png", plot = masternat_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
 
 We can look at location and number of observations reported by each user
@@ -147,7 +157,7 @@ We can look at location and number of observations reported by each user
 # Use color aesthic to distinguish between observations for each project.
 masternat_user_plot <- 
   ggplot(region_researchgrade, aes(user.login, fill = project)) +
-  geom_bar() +
+  ggplot2::geom_bar() +
     scale_fill_brewer(
     type = "qual",
     palette = "Dark2",
@@ -163,14 +173,14 @@ masternat_user_plot <-
 
 masternat_user_plot
 
-ggsave("masternat_user_plot.png", plot = masternat_user_plot, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggplot2::ggsave("masternat_user_plot.png", plot = masternat_user_plot, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
 piedmont_user_map <- ggplot() +
   mapboxapi::layer_static_mapbox(
     location = piedmont_researchgrade,
     style_url = "mapbox://styles/mapbox/light-v10"
     ) +
-  geom_sf(
+  ggplot2::geom_sf(
     mapping = aes(color = user.login),
     size = 2,
     alpha = 0.5,
@@ -186,7 +196,7 @@ piedmont_user_map <- ggplot() +
 piedmont_user_map
 #FIXME: adjust caption to fit in whitespace
 
-ggsave("piedmont_user_map.png", plot = piedmont_user_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggplot2::ggsave("piedmont_user_map.png", plot = piedmont_user_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
 # Filter out observations from the user with the most observations according to masternat_user_plot
 mmn_noriko_obs <- 
@@ -197,7 +207,7 @@ topuser_piedmont <- ggplot() +
     location = mmn_noriko_obs,
     style_url = "mapbox://styles/mapbox/light-v10") +
 # Set color aesthetic to the number of photos taken per observation
-  geom_sf(
+  ggplot2::geom_sf(
     mapping = aes(color = observation_photos_count),
     size = 2,
     alpha = 0.25,
@@ -210,6 +220,7 @@ topuser_piedmont <- ggplot() +
 
 topuser_piedmont
 #FIXME: Center title label, change colors of points, increase transparency
+ggplot2::ggsave("topuser_piedmont.png", plot = topuser_piedmont, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
 
 ```{r}
@@ -218,7 +229,7 @@ coastal_user_map <- ggplot() +
     location = coastal_researchgrade,
     style_url = "mapbox://styles/mapbox/light-v10"
     ) +
-  geom_sf(
+  ggplot2::geom_sf(
     mapping = aes(color = user.login),
     size = 2,
     alpha = 0.5,
@@ -235,24 +246,23 @@ coastal_user_map <- ggplot() +
   
 coastal_user_map
 #FIXME: Make legend two columns
-ggsave("coastal_usermap.png", plot = coastal_user_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggplot2::ggsave("coastal_usermap.png", plot = coastal_user_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
 # Filter out observations from the user with the most observations according to masternat_user_plot
 tonyiajohnson_obs <- 
-  filter(coastal_researchgrade, user.login == "tonyiajohnson")
+  dplyr::filter(coastal_researchgrade, user.login == "tonyiajohnson")
 # Map top user's observations
 topuser_coastal <- ggplot() +
   mapboxapi::layer_static_mapbox(
     location = tonyiajohnson_obs,
     style_url = "mapbox://styles/mapbox/light-v10"
     ) +
-  geom_sf(
+  ggplot2::ggplot2::geom_sf(
     mapping = aes(color = observation_photos_count),
     size = 2,
     alpha = 0.5,
     data = tonyiajohnson_obs
     ) +
-  coord_sf(xlim = c(-75.0, -78.0), ylim = c(38.0, 40.0)) +
   scale_fill_brewer(
     type = "seq",
     palette = "OrRd"
@@ -267,7 +277,7 @@ topuser_coastal <- ggplot() +
 
 topuser_coastal
 #FIXME: adjust label positions, widen x-limits
-ggsave("topuser_coastal.png", plot = topuser_coastal, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggplot2::ggsave("topuser_coastal.png", plot = topuser_coastal, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
 
 We can look at variation by kingdom, genus and species:
@@ -276,14 +286,13 @@ We can look at variation by kingdom, genus and species:
 GBIF_kingdoms_bar<- 
   ggplot(GBIF_sm, aes(x = kingdom, fill = kingdom)
   ) +
-  geom_bar() +
+  ggplot2::geom_bar() +
     scale_fill_brewer(
     type = "qual",
     palette = "Dark2"
   ) +
   guides(fill = "none") +
-  labs(title = "Maryland Biodiversity by Kingdom") +
-  geom_text(aes(
+  ggplot2::geom_text(aes(
     label = ..count..), 
     stat = "count", 
     vjust = -0.2, 
@@ -298,7 +307,7 @@ GBIF_kingdoms_bar<-
 GBIF_kingdoms_bar
 #FIXME: Center title position
 
-ggsave("GBIF_kingdoms_bar.png", plot = GBIF_kingdoms_bar, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggplot2::ggsave("GBIF_kingdoms_bar.png", plot = GBIF_kingdoms_bar, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
 # Create data
 plants_vs_animals <- 
@@ -310,16 +319,16 @@ plants_vs_animals <-
 #plants_vs_animals_bar <-
 #  ggplot(plants_vs_animals, aes(x = kingdom, fill = kingdom)
 #  ) +
-#  geom_bar() +
+#  ggplot2::geom_bar() +
 #  scale_fill_brewer(
 #    type = "qual",
 #    palette = "Dark2") +
 #  guides(fill = "none") +
 #   labs(title = "Plants vs Animals") +
-#   geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black")
+#   ggplot2::geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black")
   
 #plants_vs_animals_bar
-#ggsave("plants_vs_animals_bar.png", plot = plants_vs_animals_bar, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+#ggplot2::ggsave("plants_vs_animals_bar.png", plot = plants_vs_animals_bar, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 
 # Compute the position of labels
 #data <- plants_vs_animals %>% 
@@ -329,12 +338,12 @@ plants_vs_animals <-
 
 # Basic piechart
 #ggplot(data, aes(x="", y=prop, fill=group)) +
-#  geom_bar(stat="identity", width=1, color="white") +
+#  ggplot2::geom_bar(stat="identity", width=1, color="white") +
 #  coord_polar("y", start=0) +
 #  ggplot2::theme_void() + 
 #  ggplot2::theme(legend.position="none") +
   
-#  geom_text(aes(y = ypos, label = group), color = "white", size=6) +
+#  ggplot2::geom_text(aes(y = ypos, label = group), color = "white", size=6) +
 #  scale_fill_brewer(palette="Set1")
 
 #Other kingdoms
@@ -345,20 +354,20 @@ plants_vs_animals <-
 #minorities_kingdoms_bar <-
 #  ggplot(minorities_kingdoms, aes(x = kingdom, fill = kingdom)
 #  ) +
-#  geom_bar() +
+#  ggplot2::geom_bar() +
 #  scale_fill_brewer(
 #    type = "qual",
 #    palette = "Dark2") +
 #  guides(fill = "none") +
 #   labs(title = "Minority Kingdoms Observed") +
-#   geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black")
+#   ggplot2::geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, colour = "black")
 
 #minorities_kingdoms_bar
 ```
 
 Of the 84 unique bird species observed by users in Maryland, how many were corvids (crow family)?
 
-FIlter GBIF_MD_research_grade to return only observations in the family "Corvidae". Make sure to disclude observations where the species attribute is missing or NA. Transform dataframe into a spatial dataframe, assigning the lat/lon columns to coords to create the geometry column.
+FIlter GBIF_MD_research_grade to return only observations in the family "Corvidae". Make sure to disclude observations where the species attribute is missing or NA. Transform dataframe into a spatial dataframe, assigning the lat/lon columns to coords to create the ggplot2::geometry column.
 
 What species of corvidae were observed in Maryland? What was the most common corvid species? The least common?
 
@@ -372,7 +381,7 @@ MD_corvids <-
   
 MD_corvids_bar <-
   ggplot(MD_corvids, aes(x = species, fill = species)) +
-  geom_bar() +
+  ggplot2::geom_bar() +
   scale_fill_brewer(
     type = "qual",
     palette = "Set1"
@@ -382,6 +391,7 @@ MD_corvids_bar <-
   ggplot2::theme_classic()
 
 MD_corvids_bar
+ggplot2::ggsave("MD_corvids_bar.png", plot = MD_corvids_bar, path ="C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
 
 Where were corvids observed in Maryland? Are there any hotspots for corvid observations?
@@ -391,7 +401,7 @@ MD_corvid_sightings <- ggplot() +
   mapboxapi::layer_static_mapbox(
     location = MD_corvids,
     style_url = "mapbox://styles/mapbox/light-v10") +
-  geom_sf(
+  ggplot2::geom_sf(
     data = MD_corvids,
     aes(color = species),
     alpha = 0.7,
@@ -412,7 +422,7 @@ MD_corvid_sightings <- ggplot() +
 
 MD_corvid_sightings
 #FIXME: Center title position
-ggsave("MD_corvid_sightings.png", plot = MD_corvid_sightings, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
+ggplot2::ggsave("MD_corvid_sightings.png", plot = MD_corvid_sightings, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```
 
 ```{r gbif_insects}
@@ -434,7 +444,7 @@ MD_insects_by_family <- MD_insects %>%
 # Filter the sf data.frame down to the 40 insect families with single reportings (n = 1)
 MD_rare_insects_inc <- MD_insects_by_family %>%
   dplyr::filter(n == 1)
-# Drop geometry before performing join
+# Drop ggplot2::geometry before performing join
 MD_rare_insects_df <- sf::st_drop_geometry(MD_rare_insects_inc)
 # Perform left join where x = MD_rare_insects and y = MD_insects, resulting in a data.frame of 40 rows x 12 columns.   
 MD_rare_insects <- 
@@ -447,7 +457,7 @@ MD_rare_insects_map <- ggplot() +
   mapboxapi::layer_static_mapbox(
     location = MD_rare_insects_sf,
     style_url = "mapbox://styles/mapbox/light-v10") +
-  geom_sf(
+  ggplot2::geom_sf(
     data = MD_rare_insects_sf,
     shape = 17,
     size = 3,
@@ -468,5 +478,5 @@ MD_rare_insects_map <- ggplot() +
   )
 
 MD_rare_insects_map
-
+ggplot2::ggsave("MD_rare_insects_map.png", plot = MD_rare_insects_map, path = "C:/Users/Kari/Documents/GitHub/exploreinaturalist/deliverables")
 ```

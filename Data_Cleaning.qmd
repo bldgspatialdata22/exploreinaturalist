@@ -4,6 +4,14 @@ format: html
 editor: visual
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warnings = FALSE
+)
+```
+
 ## Data Cleaning
 
 Install required packages and libraries for cleaning data.
@@ -172,7 +180,7 @@ Additional columns were kept for GBIF occurrence data, which does not exist in d
 # Coastal
 coastal_sm <-
   coastal_3857 %>%
-  tidyselect::select(all_of(c(
+  dplyr::select(all_of(c(
     "id",
     "observed_on",
     "taxon_id",
@@ -195,7 +203,7 @@ readr::write_rds(coastal_researchgrade, here::here("data/coastal_researchgrade.r
 # Piedmont
 piedmont_sm <-
   piedmont_3857 %>%
-  tidyselect::select(all_of(c(
+  dplyr::select(all_of(c(
     "id",
     "observed_on",
     "taxon_id",
@@ -217,7 +225,7 @@ readr::write_rds(piedmont_researchgrade, here::here("data/piedmont_researchgrade
 # Biodiversity data
 biodiv_sm <-
   biodiv_3857 %>%
-  tidyselect::select(all_of(c(
+  dplyr::select(all_of(c(
     "id",
     "observed_on",
     "taxon_id",
@@ -271,7 +279,7 @@ readr::write_rds(GBIF_sm, here::here("data/GBIF_sm.rds"))
 ```{r}
 GBIF_kingdoms <- 
   GBIF_sm %>%
-  tidyselect::select(all_of(c(
+  dplyr::select(all_of(c(
     "gbifID",
     "kingdom"
   )))

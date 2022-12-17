@@ -1,5 +1,5 @@
 project:
-  title: "exploreinaturalist"
+  type: website
 
 website:
   title: "Explore iNaturalist"
