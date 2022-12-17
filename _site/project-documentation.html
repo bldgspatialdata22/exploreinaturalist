@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kari Moy">
+
+<title>Explore iNaturalist - Final Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Explore iNaturalist</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./project-documentation.html" aria-current="page">Project Documentation</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Accessing_data.html">Data Cleaning</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Data_Cleaning.html">Data Cleaning</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Data_Exploration.html">Data Exploration</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-proposal" id="toc-project-proposal" class="nav-link active" data-scroll-target="#project-proposal">Project Proposal</a>
+  <ul class="collapse">
+  <li><a href="#defining-your-goals" id="toc-defining-your-goals" class="nav-link" data-scroll-target="#defining-your-goals">Defining your goals</a></li>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">Set Up</a>
+  <ul class="collapse">
+  <li><a href="#getting-spatial-data" id="toc-getting-spatial-data" class="nav-link" data-scroll-target="#getting-spatial-data">Getting Spatial Data</a></li>
+  <li><a href="#read-data-back-into-script" id="toc-read-data-back-into-script" class="nav-link" data-scroll-target="#read-data-back-into-script">Read data back into script</a></li>
+  </ul></li>
+  <li><a href="#testing-other-rinat-functions" id="toc-testing-other-rinat-functions" class="nav-link" data-scroll-target="#testing-other-rinat-functions">Testing other rinat functions:</a></li>
+  <li><a href="#working-with-inaturalist-project-data" id="toc-working-with-inaturalist-project-data" class="nav-link" data-scroll-target="#working-with-inaturalist-project-data">Working with iNaturalist Project Data</a>
+  <ul class="collapse">
+  <li><a href="#check-data-before-plotting" id="toc-check-data-before-plotting" class="nav-link" data-scroll-target="#check-data-before-plotting">Check data before plotting</a></li>
+  <li><a href="#set-basemap-for-plots" id="toc-set-basemap-for-plots" class="nav-link" data-scroll-target="#set-basemap-for-plots">Set Basemap for plots</a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a></li>
+  <li><a href="#filter-research-grade-data" id="toc-filter-research-grade-data" class="nav-link" data-scroll-target="#filter-research-grade-data">Filter Research Grade Data</a></li>
+  <li><a href="#maryland-inaturalist-research-grade-observation-maps" id="toc-maryland-inaturalist-research-grade-observation-maps" class="nav-link" data-scroll-target="#maryland-inaturalist-research-grade-observation-maps">Maryland iNaturalist Research Grade Observation Maps</a></li>
+  </ul></li>
+  <li><a href="#start-exploring-gbif-data" id="toc-start-exploring-gbif-data" class="nav-link" data-scroll-target="#start-exploring-gbif-data">Start exploring GBIF data</a></li>
+  <li><a href="#comparative-exploration" id="toc-comparative-exploration" class="nav-link" data-scroll-target="#comparative-exploration">Comparative Exploration</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Final Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kari Moy </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="project-proposal" class="level1">
+<h1>Project Proposal</h1>
+<section id="defining-your-goals" class="level3">
+<h3 class="anchored" data-anchor-id="defining-your-goals">Defining your goals</h3>
+<p><em>In framing your project, look for opportunities to apply one or more of the six models of local practice described in <span class="citation" data-cites="loukissas2019">@loukissas2019</span>:</em></p>
+<ul>
+<li><p><em>Look at the data setting, not just the data set</em></p>
+<ul>
+<li><p>“Place is something less easily defined: contingent on experience, defined by meaning, susceptible to changing social designations,” (p.&nbsp;20 Loukissas)</p></li>
+<li><p>iNaturalist as a research and community platform – a cyperspace</p></li>
+<li><p>Allows citizen engagement in grassroots scientific research</p>
+<ul>
+<li><p>How is iNaturalist an ideal platform for citizen science? Or is it? Can if be improved?</p></li>
+<li><p>Does iNaturalist meet the goal of obtaining meaningful and useful data that advances scientific research and can be applied to real world problems?</p></li>
+<li><p>Is iNatualist data easily accessible for research purposes?</p>
+<ul>
+<li><p>rinat: Access iNaturalist data with R</p></li>
+<li><p>GBIF: Global Biodiversity Information Facility</p></li>
+<li><p>“Anyone with an account can export data from iNaturalist as a spreadsheet in csv format. You can start from the Explore page and click download in the lower right of the filters box. Or you can go directly to the export page (https://www.inaturalist.org/observations/export).</p>
+<p>If you plan to publish a paper using iNaturalist data, we recommend downloading iNaturalist data from the Global Biodiversity Information Facility because they will issue a citable DOI (see below for more details).” (https://www.inaturalist.org/pages/help#export)</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p><em>Make place part of data presentation</em></p>
+<ul>
+<li><p>Can amateur bioblitz/biodiversity observations hold enough merit to be included in data sets for professional or academic research?</p>
+<ul>
+<li><p>offers research grade status</p></li>
+<li><p>Who qualifies the data as research grade?</p>
+<ul>
+<li>“Observations become <strong>”Research Grade”</strong> when the <strong>community agrees on species-level ID or lower</strong>, i.e.&nbsp;when more than 2/3 of identifiers agree on a taxon” (https://www.inaturalist.org/pages/help#quality)</li>
+</ul></li>
+<li><p>How are identifications confirmed?</p></li>
+</ul></li>
+</ul></li>
+<li><p><em>Take a comparative approach to data analysis</em></p>
+<ul>
+<li><p>How does citizen science data compare to professional inventory data in the same or similar areas?</p></li>
+<li><p>How does user access to iNaturalist data compare to that of Socrata data or iMap data?</p>
+<ul>
+<li>limited # of requests due to API limits (10,000 requests per day, 100 requests per minute)</li>
+<li>Does iNaturalist or citizen science data have a place in research?</li>
+</ul></li>
+</ul></li>
+<li><p>Create counterdata to challenge normative algorithms</p>
+<ul>
+<li>iNaturalist data should be considered the counterdata to data collected by government, academic, and industry institutions.
+<ul>
+<li>Can iNaturalist data be used to support finding in more official data formats?</li>
+</ul></li>
+</ul></li>
+<li><p>Create interfaces that cause friction</p>
+<ul>
+<li><p>Offers map interface to view all observations, filter observations by various attributes (ei. biota, location, temporal, author), calculates general statistics of Project’s observation data.</p></li>
+<li><p>Where could further improvements be made to the interface?</p></li>
+</ul></li>
+<li><p>Use data to build relationships</p>
+<ul>
+<li></li>
+</ul></li>
+</ul>
+</section>
+<section id="set-up" class="level2">
+<h2 class="anchored" data-anchor-id="set-up">Set Up</h2>
+<p>library(tmap)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("ropensci/rinat")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("ropensci/rgbif")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rinat) <span class="co"># R package to retreive data from iNaturalist database</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgbif) <span class="co"># R package to retreive data from GBIF database</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyverse' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>-- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+v ggplot2 3.4.0      v purrr   0.3.5 
+v tibble  3.1.8      v dplyr   1.0.10
+v tidyr   1.2.1      v stringr 1.4.1 
+v readr   2.1.3      v forcats 0.5.2 </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tibble' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'purrr' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'stringr' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'forcats' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># R package for creating plots and maps</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spData) <span class="co"># R package for importing US states data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'spData' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>To access larger datasets in this package, install the spDataLarge
+package with: `install.packages('spDataLarge',
+repos='https://nowosad.github.io/drat/', type='source')`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf) <span class="co"># R package for working with simple features</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'sf' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 7.2.1; sf_use_s2() is TRUE</code></pre>
+</div>
+</div>
+<section id="getting-spatial-data" class="level3">
+<h3 class="anchored" data-anchor-id="getting-spatial-data">Getting Spatial Data</h3>
+<p>Use get_inat_obs_project() to get observation data.</p>
+<ul>
+<li><p>type = “info” argument returns # of observations in data set</p></li>
+<li><p>type = “observations” argument returns all observations in data set</p></li>
+<li><p>cannot filter data from project using this function.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get spatial data and save into local data folder</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>MD_masternat_piedmont <span class="ot">&lt;-</span> <span class="fu">get_inat_obs_project</span>(<span class="st">"maryland-master-naturalist-program-piedmont-region"</span>, <span class="at">type =</span> <span class="st">"observations"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_rds</span>(MD_masternat_piedmont, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/MD_masternat_piedmont.rds"</span>))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>MD_masternat_coastal <span class="ot">&lt;-</span> <span class="fu">get_inat_obs_project</span>(<span class="st">"maryland-master-naturalist-program-coastal-plain"</span>, <span class="at">type =</span> <span class="st">"observations"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_rds</span>(MD_masternat_coastal, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/MD_masternat_coastal.rds"</span>))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>MD_biodiversity <span class="ot">&lt;-</span> <span class="fu">get_inat_obs_project</span>(<span class="st">"biodiversity-of-maryland"</span>, <span class="at">type =</span> <span class="st">"observations"</span>)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"us_states"</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>maryland_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(us_states, NAME <span class="sc">==</span> <span class="st">"Maryland"</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_rds</span>(maryland_data, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/maryland_data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="read-data-back-into-script" class="level3">
+<h3 class="anchored" data-anchor-id="read-data-back-into-script">Read data back into script</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read data saved to data folder</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>MD_masternat_piedmont <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/MD_masternat_piedmont.rds"</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>MD_masternat_coastal <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/MD_masternat_coastal.rds"</span>))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>MD_biodiversity <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/MD_biodiversity.rds"</span>))</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>maryland_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/maryland_data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>OK – I can access spatial datasets from iNaturalist using rinat :: get_inat_obs_projct(). However, for projects with more observations I cannot subset data using this function, so it will take a long time to retrieve the full dataset (ei. MD_masternat_piedmont only has 3934 observations, whereas the MD_biodiversity contains over 1 million observations and can only return 10,000 observations due to the limits of iNaturalist’s current API.</p>
+<ul>
+<li><p>Actually, only returned 9999 observations and displayed this note:</p>
+<ul>
+<li>Note: mismatch between number of observations reported and returned by the API.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="testing-other-rinat-functions" class="level2">
+<h2 class="anchored" data-anchor-id="testing-other-rinat-functions">Testing other rinat functions:</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Map 100 spotted salamanders</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>a_mac <span class="ot">&lt;-</span> <span class="fu">get_inat_obs</span>(<span class="at">taxon_name =</span> <span class="st">"Ambystoma maculatum"</span>, <span class="at">year =</span> <span class="dv">2021</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>salamander_map <span class="ot">&lt;-</span> <span class="fu">inat_map</span>(a_mac, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Further customise the returned ggplot object</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>salamander_map <span class="sc">+</span> <span class="fu">borders</span>(<span class="st">"state"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="project-documentation_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Attempting to reduce the number of columns (75) down to a manageable and also relevent number of columns.</p>
+<p>Is there a list of column descriptions anywhere in the iNaturalist API documentation?</p>
+<ul>
+<li><p>“id” = unique observation ID</p></li>
+<li><p>“taxon.id” or “taxon_id = scientific name</p></li>
+<li><p>“observed_on” = user reported date of observation</p></li>
+<li><p>“description” = user reported qualitative data to help with species ID</p></li>
+<li><p>“place_guess” = name of location</p></li>
+<li><p>“latitude” &amp; “longitude”</p></li>
+<li><p>“quality_grade” = level of confidence of identification; values are: “needs id” or “research”</p></li>
+</ul>
+</section>
+<section id="working-with-inaturalist-project-data" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-inaturalist-project-data">Working with iNaturalist Project Data</h2>
+<section id="check-data-before-plotting" class="level3">
+<h3 class="anchored" data-anchor-id="check-data-before-plotting">Check data before plotting</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Review column names and column data types</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(MD_masternat_piedmont)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3,941
+Columns: 75
+$ id                                &lt;int&gt; 141801437, 141712683, 141636261, 141~
+$ observed_on                       &lt;chr&gt; "2022-11-11", "2022-11-11", "2022-11~
+$ description                       &lt;chr&gt; "", "", "", "", "", NA, "10 trunks!!~
+$ latitude                          &lt;chr&gt; "39.1777871858", "39.1778806261", "3~
+$ longitude                         &lt;chr&gt; "-76.9985153071", "-76.9985562396", ~
+$ map_scale                         &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ timeframe                         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ species_guess                     &lt;chr&gt; "", "", "", "Bald Eagle", "Red-shoul~
+$ user_id                           &lt;int&gt; 3528088, 3528088, 3528088, 3528088, ~
+$ taxon_id                          &lt;int&gt; 296661, 58727, 54841, 5305, 5206, 47~
+$ created_at                        &lt;chr&gt; "2022-11-12T17:48:43.422Z", "2022-11~
+$ updated_at                        &lt;chr&gt; "2022-11-12T17:48:55.003Z", "2022-11~
+$ place_guess                       &lt;chr&gt; "Clarksville, MD, US", "Clarksville,~
+$ id_please                         &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, F~
+$ observed_on_string                &lt;chr&gt; "2022-11-11 13:32:03-05:00", "2022-1~
+$ iconic_taxon_id                   &lt;int&gt; 1, 47126, 47126, 3, 3, 47178, NA, 47~
+$ num_identification_agreements     &lt;int&gt; 0, 0, 0, 4, 3, 0, 0, 0, 0, 1, 2, 0, ~
+$ num_identification_disagreements  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ time_observed_at                  &lt;chr&gt; "2022-11-11T18:32:03.000Z", "2022-11~
+$ time_zone                         &lt;chr&gt; "Eastern Time (US &amp; Canada)", "Easte~
+$ location_is_exact                 &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, F~
+$ delta                             &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, F~
+$ positional_accuracy               &lt;int&gt; 4, 4, 4, NA, NA, 442, 2177, 4, 4, 4,~
+$ private_latitude                  &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ private_longitude                 &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ geoprivacy                        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ quality_grade                     &lt;chr&gt; "needs_id", "needs_id", "needs_id", ~
+$ positioning_method                &lt;chr&gt; NA, NA, NA, NA, NA, "gps", "gps", NA~
+$ positioning_device                &lt;chr&gt; NA, NA, NA, NA, NA, "gps", "gps", NA~
+$ out_of_range                      &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ license                           &lt;chr&gt; "CC-BY-NC", "CC-BY-NC", "CC-BY-NC", ~
+$ uri                               &lt;chr&gt; "https://www.inaturalist.org/observa~
+$ observation_photos_count          &lt;int&gt; 2, 1, 1, 1, 1, 3, 3, 1, 1, 2, 1, 1, ~
+$ comments_count                    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ zic_time_zone                     &lt;chr&gt; "America/New_York", "America/New_Yor~
+$ oauth_application_id              &lt;int&gt; 3, 3, 3, 3, 3, 2, 2, 3, 3, 3, 3, 3, ~
+$ observation_sounds_count          &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ identifications_count             &lt;int&gt; 1, 1, 1, 5, 4, 1, 0, 1, 1, 2, 3, 1, ~
+$ captive                           &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, F~
+$ community_taxon_id                &lt;int&gt; NA, NA, NA, 5305, 5206, NA, NA, NA, ~
+$ site_id                           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ~
+$ old_uuid                          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ public_positional_accuracy        &lt;int&gt; 4, 4, 4, NA, NA, 442, 2177, 4, 4, 4,~
+$ mappable                          &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, ~
+$ cached_votes_total                &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ last_indexed_at                   &lt;chr&gt; "2022-11-12T17:49:43.701Z", "2022-11~
+$ private_place_guess               &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ uuid                              &lt;chr&gt; "bfbe1944-324f-4bd4-be5b-79fe35e1e90~
+$ taxon_geoprivacy                  &lt;chr&gt; NA, NA, "open", NA, "open", NA, NA, ~
+$ tag_list                          &lt;list&gt; [], [], [], [], [], [], [], [], [],~
+$ short_description                 &lt;chr&gt; "", "", "", "", "", NA, "10 trunks!!~
+$ user_login                        &lt;chr&gt; "vulture63", "vulture63", "vulture63~
+$ iconic_taxon_name                 &lt;chr&gt; "Animalia", "Plantae", "Plantae", "A~
+$ faves_count                       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ created_at_utc                    &lt;chr&gt; "2022-11-12T17:48:43.422Z", "2022-11~
+$ updated_at_utc                    &lt;chr&gt; "2022-11-12T17:48:55.003Z", "2022-11~
+$ time_observed_at_utc              &lt;chr&gt; "2022-11-11T18:32:03.000Z", "2022-11~
+$ owners_identification_from_vision &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, FALSE,~
+$ photos                            &lt;list&gt; [&lt;data.frame[2 x 26]&gt;], [&lt;data.fram~
+$ coordinates_obscured              &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ taxon.id                          &lt;int&gt; 296661, 58727, 54841, 5305, 5206, 47~
+$ taxon.name                        &lt;chr&gt; "Dicyrtomina minuta", "Berberis thun~
+$ taxon.rank                        &lt;chr&gt; "species", "species", "species", "sp~
+$ taxon.ancestry                    &lt;chr&gt; "48460/1/47120/372739/243773/49470/1~
+$ taxon.common_name.id              &lt;int&gt; NA, 155712, 149927, 6859, 6736, 7849~
+$ taxon.common_name.name            &lt;chr&gt; NA, "Japanese barberry", "white will~
+$ taxon.common_name.is_valid        &lt;lgl&gt; NA, TRUE, TRUE, TRUE, TRUE, TRUE, NA~
+$ taxon.common_name.lexicon         &lt;chr&gt; NA, "English", "English", "English",~
+$ iconic_taxon.id                   &lt;int&gt; 1, 47126, 47126, 3, 3, 47178, NA, 47~
+$ iconic_taxon.name                 &lt;chr&gt; "Animalia", "Plantae", "Plantae", "A~
+$ iconic_taxon.rank                 &lt;chr&gt; "kingdom", "kingdom", "kingdom", "cl~
+$ iconic_taxon.rank_level           &lt;dbl&gt; 70, 70, 70, 50, 50, 50, NA, 70, 50, ~
+$ iconic_taxon.ancestry             &lt;chr&gt; "48460", "48460", "48460", "48460/1/~
+$ user.login                        &lt;chr&gt; "vulture63", "vulture63", "vulture63~
+$ user.user_icon_url                &lt;chr&gt; "https://static.inaturalist.org/atta~</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(MD_masternat_piedmont)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "id"                                "observed_on"                      
+ [3] "description"                       "latitude"                         
+ [5] "longitude"                         "map_scale"                        
+ [7] "timeframe"                         "species_guess"                    
+ [9] "user_id"                           "taxon_id"                         
+[11] "created_at"                        "updated_at"                       
+[13] "place_guess"                       "id_please"                        
+[15] "observed_on_string"                "iconic_taxon_id"                  
+[17] "num_identification_agreements"     "num_identification_disagreements" 
+[19] "time_observed_at"                  "time_zone"                        
+[21] "location_is_exact"                 "delta"                            
+[23] "positional_accuracy"               "private_latitude"                 
+[25] "private_longitude"                 "geoprivacy"                       
+[27] "quality_grade"                     "positioning_method"               
+[29] "positioning_device"                "out_of_range"                     
+[31] "license"                           "uri"                              
+[33] "observation_photos_count"          "comments_count"                   
+[35] "zic_time_zone"                     "oauth_application_id"             
+[37] "observation_sounds_count"          "identifications_count"            
+[39] "captive"                           "community_taxon_id"               
+[41] "site_id"                           "old_uuid"                         
+[43] "public_positional_accuracy"        "mappable"                         
+[45] "cached_votes_total"                "last_indexed_at"                  
+[47] "private_place_guess"               "uuid"                             
+[49] "taxon_geoprivacy"                  "tag_list"                         
+[51] "short_description"                 "user_login"                       
+[53] "iconic_taxon_name"                 "faves_count"                      
+[55] "created_at_utc"                    "updated_at_utc"                   
+[57] "time_observed_at_utc"              "owners_identification_from_vision"
+[59] "photos"                            "coordinates_obscured"             
+[61] "taxon.id"                          "taxon.name"                       
+[63] "taxon.rank"                        "taxon.ancestry"                   
+[65] "taxon.common_name.id"              "taxon.common_name.name"           
+[67] "taxon.common_name.is_valid"        "taxon.common_name.lexicon"        
+[69] "iconic_taxon.id"                   "iconic_taxon.name"                
+[71] "iconic_taxon.rank"                 "iconic_taxon.rank_level"          
+[73] "iconic_taxon.ancestry"             "user.login"                       
+[75] "user.user_icon_url"               </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lat/lon data is chr data; needs to be numeric in order to used as geom</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check coordinate reference system of all data</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>basemap_crs <span class="ot">&lt;-</span> <span class="fu">st_crs</span>(maryland_data)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># CRS = "EPSG: 4269"</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(MD_masternat_coastal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System: NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CRS = NA</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(MD_masternat_piedmont)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System: NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CRS = NA</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(MD_biodiversity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System: NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CRS = NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="set-basemap-for-plots" class="level3">
+<h3 class="anchored" data-anchor-id="set-basemap-for-plots">Set Basemap for plots</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>osmdata<span class="sc">::</span><span class="fu">getbb</span>(<span class="st">"Maryland"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        min       max
+x -79.48731 -74.98520
+y  37.88653  39.72288</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>MD_bbox <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(<span class="at">xmin =</span> <span class="sc">-</span><span class="fl">79.48731</span>, <span class="at">xmax =</span> <span class="sc">-</span><span class="fl">74.98520</span>, <span class="at">ymin =</span> <span class="fl">37.88653</span>, <span class="at">ymax =</span> <span class="fl">39.72288</span>), <span class="at">crs =</span> <span class="fu">st_crs</span>(<span class="dv">4269</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>basemap <span class="ot">&lt;-</span> basemaps<span class="sc">::</span><span class="fu">set_defaults</span>(<span class="at">ext =</span> MD_bbox, <span class="at">map_service =</span> <span class="st">"osm"</span>, <span class="at">map_type =</span> <span class="st">"world_light_gray_base"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-cleaning" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prep MD_masternat_coastal data</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert lat/lon columns to numeric type</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>MD_masternat_coastal<span class="sc">$</span>latitude <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(MD_masternat_coastal<span class="sc">$</span>latitude))</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>MD_masternat_coastal<span class="sc">$</span>longitude <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(MD_masternat_coastal<span class="sc">$</span>longitude))</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for NAs in lat/lon columns</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>costal_na_lat <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">is.na</span>(MD_masternat_coastal<span class="sc">$</span>latitude))</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>coastal_na_lon <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">is.na</span>(MD_masternat_coastal<span class="sc">$</span>longitude))</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Both columns return NA values in rows: 1341, 1342, 1344, 1382</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove rows in dateframe with NA values</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>MD_masternat_coastal_drop_na <span class="ot">&lt;-</span> MD_masternat_coastal <span class="sc">%&gt;%</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(latitude)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert iNaturalist dataframes into sf objects</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>MD_masternat_coastal_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(MD_masternat_coastal_drop_na, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> basemap_crs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeat aboce steps for MD_masternat_piedmont data</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert lat/lon columns to numeric type</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>MD_masternat_piedmont<span class="sc">$</span>latitude <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(MD_masternat_piedmont<span class="sc">$</span>latitude))</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>MD_masternat_piedmont<span class="sc">$</span>longitude <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(MD_masternat_piedmont<span class="sc">$</span>longitude))</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for NAs in lat/lon columns</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>piedmont_na_lat <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">is.na</span>(MD_masternat_piedmont<span class="sc">$</span>latitude))</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>piedmont_na_lon <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">is.na</span>(MD_masternat_piedmont<span class="sc">$</span>longitude))</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Both columns return NA values in 100 rows</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove rows in dateframe with NA values</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>MD_masternat_piedmont_drop_na <span class="ot">&lt;-</span> MD_masternat_piedmont <span class="sc">%&gt;%</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(latitude)</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert iNaturalist dataframes into sf objects</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>MD_masternat_piedmont_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(MD_masternat_piedmont_drop_na, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> basemap_crs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeat aboce steps for MD_biodiversity data</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert lat/lon columns to numeric type</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>MD_biodiversity<span class="sc">$</span>latitude <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(MD_biodiversity<span class="sc">$</span>latitude))</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>MD_biodiversity<span class="sc">$</span>longitude <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(MD_biodiversity<span class="sc">$</span>longitude))</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for NAs in lat/lon columns</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>biodiversity_na_lat <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">is.na</span>(MD_biodiversity<span class="sc">$</span>latitude))</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>biodiversity_na_lon <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">is.na</span>(MD_biodiversity<span class="sc">$</span>longitude))</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Both columns return NA values</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove rows in dateframe with NA values</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>MD_biodiversity_drop_na <span class="ot">&lt;-</span> MD_biodiversity <span class="sc">%&gt;%</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(latitude)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert iNaturalist dataframes into sf objects</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>MD_biodiversity_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(MD_biodiversity_drop_na, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> basemap_crs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="filter-research-grade-data" class="level3">
+<h3 class="anchored" data-anchor-id="filter-research-grade-data">Filter Research Grade Data</h3>
+<ul>
+<li><p>Note: column names are not consistent between all iNaturalist Projects (see taxon ID column)</p>
+<ul>
+<li>Should I rename all the columns as part of my data cleaning in case I want to join datasets later?</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new dataframe, filtering out unecessary variables</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep variables that will be useful in further analysis</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Coastal</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>MD_masternat_coastal_sm <span class="ot">&lt;-</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  MD_masternat_coastal_sf <span class="sc">%&gt;%</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"id"</span>,</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"taxon_id"</span>,</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"observed_on"</span>,</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"description"</span>,</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"place_guess"</span>,</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"quality_grade"</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  )))</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter dataframe down to research quality observations</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>MD_masternat_coastal_researchgrade <span class="ot">&lt;-</span></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(MD_masternat_coastal_sm, quality_grade <span class="sc">==</span> <span class="st">"research"</span>)</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Piedmont</span></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>MD_masternat_piedmont_sm <span class="ot">&lt;-</span></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>  MD_masternat_piedmont_sf <span class="sc">%&gt;%</span></span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"id"</span>,</span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"taxon_id"</span>,</span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"observed_on"</span>,</span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"description"</span>,</span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"place_guess"</span>,</span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"quality_grade"</span></span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>  )))</span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter dataframe down to research quality observations</span></span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>MD_masternat_piedmont_researchgrade <span class="ot">&lt;-</span></span>
+<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(MD_masternat_piedmont_sm, quality_grade <span class="sc">==</span> <span class="st">"research"</span>)</span>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Biodiversity data</span></span>
+<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>MD_biodiversity_sm <span class="ot">&lt;-</span></span>
+<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>  MD_biodiversity_sf <span class="sc">%&gt;%</span></span>
+<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(</span>
+<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"id"</span>,</span>
+<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"taxon.id"</span>,</span>
+<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"observed_on"</span>,</span>
+<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"description"</span>,</span>
+<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"place_guess"</span>,</span>
+<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"quality_grade"</span></span>
+<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a>  )))</span>
+<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter dataframe down to research quality observations</span></span>
+<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a>MD_biodiversity_researchgrade <span class="ot">&lt;-</span></span>
+<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(MD_biodiversity_sm, quality_grade <span class="sc">==</span> <span class="st">"research"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check CRS again</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(MD_masternat_coastal_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: EPSG:4269 
+  wkt:
+GEOGCS["NAD83",
+    DATUM["North_American_Datum_1983",
+        SPHEROID["GRS 1980",6378137,298.257222101,
+            AUTHORITY["EPSG","7019"]],
+        TOWGS84[0,0,0,0,0,0,0],
+        AUTHORITY["EPSG","6269"]],
+    PRIMEM["Greenwich",0,
+        AUTHORITY["EPSG","8901"]],
+    UNIT["degree",0.0174532925199433,
+        AUTHORITY["EPSG","9122"]],
+    AUTHORITY["EPSG","4269"]]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(MD_masternat_piedmont_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: EPSG:4269 
+  wkt:
+GEOGCS["NAD83",
+    DATUM["North_American_Datum_1983",
+        SPHEROID["GRS 1980",6378137,298.257222101,
+            AUTHORITY["EPSG","7019"]],
+        TOWGS84[0,0,0,0,0,0,0],
+        AUTHORITY["EPSG","6269"]],
+    PRIMEM["Greenwich",0,
+        AUTHORITY["EPSG","8901"]],
+    UNIT["degree",0.0174532925199433,
+        AUTHORITY["EPSG","9122"]],
+    AUTHORITY["EPSG","4269"]]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(MD_biodiversity_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: EPSG:4269 
+  wkt:
+GEOGCS["NAD83",
+    DATUM["North_American_Datum_1983",
+        SPHEROID["GRS 1980",6378137,298.257222101,
+            AUTHORITY["EPSG","7019"]],
+        TOWGS84[0,0,0,0,0,0,0],
+        AUTHORITY["EPSG","6269"]],
+    PRIMEM["Greenwich",0,
+        AUTHORITY["EPSG","8901"]],
+    UNIT["degree",0.0174532925199433,
+        AUTHORITY["EPSG","9122"]],
+    AUTHORITY["EPSG","4269"]]</code></pre>
+</div>
+</div>
+</section>
+<section id="maryland-inaturalist-research-grade-observation-maps" class="level3">
+<h3 class="anchored" data-anchor-id="maryland-inaturalist-research-grade-observation-maps">Maryland iNaturalist Research Grade Observation Maps</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up base map</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"us_states"</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>maryland_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(us_states, NAME <span class="sc">==</span> <span class="st">"Maryland"</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>maryland_map <span class="ot">&lt;-</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> maryland_data, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="cn">NA</span>)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>maryland_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="project-documentation_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot research grade data as layer on base map</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Coastal</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>MD_masternat_coastal_research_map <span class="ot">&lt;-</span> maryland_map <span class="sc">+</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(),</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> MD_masternat_coastal_researchgrade</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Maryland Coastal Research Grade Observations"</span>,</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data courtesy of iNaturalist: Master Naturalist Program - Coastal Plain </span><span class="sc">\n</span><span class="st"> project_id = 474"</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>MD_masternat_coastal_research_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="project-documentation_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ADD THEME, TITLE, LABELS</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Piedmont</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>MD_masternat_piedmont_research_map <span class="ot">&lt;-</span> maryland_map <span class="sc">+</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> taxon_id),</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> MD_masternat_piedmont_researchgrade</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Maryland Piedmont Research Grade Observations"</span>,</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data courtesy of iNaturalist: Master Naturalist Program - Piedmont Region </span><span class="sc">\n</span><span class="st"> project_id = 1396"</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>MD_masternat_piedmont_research_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="project-documentation_files/figure-html/unnamed-chunk-12-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ADD THEME, TITLE, LABELS</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># state biodiversity data</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>MD_biodiversity_researchgrade_map <span class="ot">&lt;-</span> maryland_map <span class="sc">+</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> taxon.id),</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> MD_biodiversity_researchgrade</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Maryland Biodiversity Research Grade Observations"</span>,</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data courtesy of iNaturalist: Maryland Biodiversity Project </span><span class="sc">\n</span><span class="st"> project_id = 17241"</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>MD_biodiversity_researchgrade_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="project-documentation_files/figure-html/unnamed-chunk-12-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ADD THEME, TITLE, LABELS</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After further research I have decided that accessing data through GBIF will be a more reliable way to gather data from iNaturalist.</p>
+<ul>
+<li>I will attempt to explore iNaturalist research-grade data.</li>
+<li>Is there a way to filter GBIF&lt;iNaturalist&lt;research-grade&lt;by project? Or &lt;geolocation?
+<ul>
+<li>There are advanced filter options on the GBIF website to filter down to geolocation.</li>
+<li>I’m not sure yet how to perform these filter options within R, but I’m not sure it’s necessary either.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm 2-letter country code for United States</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rgb_country_codes</span>(<span class="at">country_name =</span> <span class="st">"United"</span>, <span class="at">fuzzy =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    code                                 name                      gbif_name
+2     AE                 United Arab Emirates           UNITED_ARAB_EMIRATES
+77    GB                       United Kingdom                 UNITED_KINGDOM
+228   TZ         Tanzania, United Republic of                       TANZANIA
+231   UM United States Minor Outlying Islands UNITED_STATES_OUTLYING_ISLANDS
+232   US                        United States                  UNITED_STATES</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recreate data occurance search done on website with the following filters:</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># country or area = United States of America</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># dataset = iNaturalist Research-grade Observations (50c9509d-22c7-4a22-a47d-8c48425ef4a7)</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co"># has coordinate = true</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co"># has geospatial issue = false</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co"># occurance statis = present</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="co"># state province = Maryland</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>GBIF_MD_research_grade <span class="ot">&lt;-</span></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">occ_search</span>(</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">taxonKey =</span> <span class="cn">NULL</span>,</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">scientificName =</span> <span class="cn">NULL</span>,</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">country =</span> <span class="st">"US"</span>,</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">datasetKey =</span> <span class="st">"50c9509d-22c7-4a22-a47d-8c48425ef4a7"</span>,</span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">hasCoordinate =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">hasGeospatialIssue =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">occurrenceStatus =</span> <span class="st">"present"</span>,</span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">stateProvince =</span> <span class="st">"Maryland"</span></span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_rds</span>(GBIF_MD_research_grade, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/GBIF_MD_research_grade.rds"</span>))</span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a>GBIF_MD_research_grade <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/GBIF_MD_research_grade.rds"</span>))</span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset data tibble and assign to original variable</span></span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">FIXME</span><span class="co">: You should save the metadata attached to the original results from occ_search() in case you need it later. Your original code just replaced the original results with the data</span></span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a>GBIF_MD_research_grade_full <span class="ot">&lt;-</span> GBIF_MD_research_grade</span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>GBIF_MD_research_grade <span class="ot">&lt;-</span> GBIF_MD_research_grade<span class="sc">$</span>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="start-exploring-gbif-data" class="level2">
+<h2 class="anchored" data-anchor-id="start-exploring-gbif-data">Start exploring GBIF data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore data</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(GBIF_MD_research_grade)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 500
+Columns: 88
+$ key                           &lt;chr&gt; "3455477909", "3455493790", "3455493810"~
+$ scientificName                &lt;chr&gt; "Diphasiastrum digitatum (Dill. ex A.Bra~
+$ decimalLatitude               &lt;dbl&gt; 39.63978, 39.28838, 39.01215, 39.14230, ~
+$ decimalLongitude              &lt;dbl&gt; -76.73673, -76.58014, -77.04549, -77.249~
+$ issues                        &lt;chr&gt; "cdround", "cdround", "cdround", "cdroun~
+$ datasetKey                    &lt;chr&gt; "50c9509d-22c7-4a22-a47d-8c48425ef4a7", ~
+$ publishingOrgKey              &lt;chr&gt; "28eb1a3f-1c15-4a95-931a-4af90ecb574d", ~
+$ installationKey               &lt;chr&gt; "997448a8-f762-11e1-a439-00145eb45e9a", ~
+$ publishingCountry             &lt;chr&gt; "US", "US", "US", "US", "US", "US", "US"~
+$ protocol                      &lt;chr&gt; "DWC_ARCHIVE", "DWC_ARCHIVE", "DWC_ARCHI~
+$ lastCrawled                   &lt;chr&gt; "2022-12-09T14:02:27.502+00:00", "2022-1~
+$ lastParsed                    &lt;chr&gt; "2022-12-09T20:34:02.663+00:00", "2022-1~
+$ crawlId                       &lt;int&gt; 327, 327, 327, 327, 327, 327, 327, 327, ~
+$ hostingOrganizationKey        &lt;chr&gt; "28eb1a3f-1c15-4a95-931a-4af90ecb574d", ~
+$ basisOfRecord                 &lt;chr&gt; "HUMAN_OBSERVATION", "HUMAN_OBSERVATION"~
+$ occurrenceStatus              &lt;chr&gt; "PRESENT", "PRESENT", "PRESENT", "PRESEN~
+$ taxonKey                      &lt;int&gt; 2688379, 5219681, 2493801, 2480542, 2435~
+$ kingdomKey                    &lt;int&gt; 6, 1, 1, 1, 1, 6, 6, 1, 1, 1, 1, 6, 1, 1~
+$ phylumKey                     &lt;int&gt; 7707728, 44, 44, 44, 44, 7707728, 770772~
+$ classKey                      &lt;int&gt; 245, 359, 212, 212, 359, 220, 220, 212, ~
+$ orderKey                      &lt;int&gt; 421, 1459, 729, 7191147, 732, 400, 408, ~
+$ familyKey                     &lt;int&gt; 6725, 9456, 9355, 2877, 9703, 6693, 6652~
+$ genusKey                      &lt;int&gt; 6385542, 2437489, 2493797, 2480517, 2435~
+$ speciesKey                    &lt;int&gt; 2688379, 5219681, 2493801, 2480542, 2435~
+$ acceptedTaxonKey              &lt;int&gt; 2688379, 5219681, 2493801, 2480542, 2435~
+$ acceptedScientificName        &lt;chr&gt; "Diphasiastrum digitatum (Dill. ex A.Bra~
+$ kingdom                       &lt;chr&gt; "Plantae", "Animalia", "Animalia", "Anim~
+$ phylum                        &lt;chr&gt; "Tracheophyta", "Chordata", "Chordata", ~
+$ order                         &lt;chr&gt; "Lycopodiales", "Rodentia", "Passeriform~
+$ family                        &lt;chr&gt; "Lycopodiaceae", "Sciuridae", "Troglodyt~
+$ genus                         &lt;chr&gt; "Diphasiastrum", "Sciurus", "Thryothorus~
+$ species                       &lt;chr&gt; "Diphasiastrum digitatum", "Sciurus caro~
+$ genericName                   &lt;chr&gt; "Diphasiastrum", "Sciurus", "Thryothorus~
+$ specificEpithet               &lt;chr&gt; "digitatum", "carolinensis", "ludovician~
+$ taxonRank                     &lt;chr&gt; "SPECIES", "SPECIES", "SPECIES", "SPECIE~
+$ taxonomicStatus               &lt;chr&gt; "ACCEPTED", "ACCEPTED", "ACCEPTED", "ACC~
+$ iucnRedListCategory           &lt;chr&gt; "NE", "LC", "LC", "LC", "NE", "LC", "NE"~
+$ dateIdentified                &lt;chr&gt; "2022-01-02T17:26:35", "2022-01-01T18:27~
+$ coordinateUncertaintyInMeters &lt;dbl&gt; 10, 5, 65, 439, NA, 35, NA, 122, 28181, ~
+$ stateProvince                 &lt;chr&gt; "Maryland", "Maryland", "Maryland", "Mar~
+$ year                          &lt;int&gt; 2022, 2022, 2022, 2022, 2022, 2022, 2022~
+$ month                         &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1~
+$ day                           &lt;int&gt; 2, 1, 1, 2, 2, 2, 2, 4, 3, 6, 4, 5, 7, 8~
+$ eventDate                     &lt;chr&gt; "2022-01-02T11:26:46", "2022-01-01T13:27~
+$ modified                      &lt;chr&gt; "2022-01-07T11:32:47.000+00:00", "2022-0~
+$ lastInterpreted               &lt;chr&gt; "2022-12-09T20:34:02.663+00:00", "2022-1~
+$ references                    &lt;chr&gt; "https://www.inaturalist.org/observation~
+$ license                       &lt;chr&gt; "http://creativecommons.org/licenses/by-~
+$ identifiers                   &lt;chr&gt; "none", "none", "none", "none", "none", ~
+$ facts                         &lt;chr&gt; "none", "none", "none", "none", "none", ~
+$ relations                     &lt;chr&gt; "none", "none", "none", "none", "none", ~
+$ isInCluster                   &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE~
+$ datasetName                   &lt;chr&gt; "iNaturalist research-grade observations~
+$ recordedBy                    &lt;chr&gt; "Peter M Martin", "arborizations", "aspo~
+$ identifiedBy                  &lt;chr&gt; "Peter M Martin", "arborizations", "Brid~
+$ geodeticDatum                 &lt;chr&gt; "WGS84", "WGS84", "WGS84", "WGS84", "WGS~
+$ class                         &lt;chr&gt; "Lycopodiopsida", "Mammalia", "Aves", "A~
+$ countryCode                   &lt;chr&gt; "US", "US", "US", "US", "US", "US", "US"~
+$ recordedByIDs                 &lt;chr&gt; "none", "none", "none", "none", "none", ~
+$ identifiedByIDs               &lt;chr&gt; "none", "none", "none", "none", "none", ~
+$ country                       &lt;chr&gt; "United States of America", "United Stat~
+$ rightsHolder                  &lt;chr&gt; "Peter M Martin", "arborizations", "aspo~
+$ identifier                    &lt;chr&gt; "104193732", "104118861", "104123711", "~
+$ http...unknown.org.nick       &lt;chr&gt; "petermmartin", "arborizations", "asponb~
+$ verbatimEventDate             &lt;chr&gt; "Sun Jan 02 2022 11:26:46 GMT-0500 (EST)~
+$ collectionCode                &lt;chr&gt; "Observations", "Observations", "Observa~
+$ gbifID                        &lt;chr&gt; "3455477909", "3455493790", "3455493810"~
+$ verbatimLocality              &lt;chr&gt; "Prettyboy Reservoir Park, Parkton, MD, ~
+$ occurrenceID                  &lt;chr&gt; "https://www.inaturalist.org/observation~
+$ taxonID                       &lt;chr&gt; "122100", "46017", "7513", "5212", "1185~
+$ catalogNumber                 &lt;chr&gt; "104193732", "104118861", "104123711", "~
+$ institutionCode               &lt;chr&gt; "iNaturalist", "iNaturalist", "iNaturali~
+$ eventTime                     &lt;chr&gt; "11:26:46-05:00", "13:27:26-05:00", "14:~
+$ occurrenceRemarks             &lt;chr&gt; "not shown shallow runners", NA, NA, NA,~
+$ http...unknown.org.captive    &lt;chr&gt; "wild", "wild", "wild", "wild", "wild", ~
+$ identificationID              &lt;chr&gt; "229285610", "229095322", "229117924", "~
+$ name                          &lt;chr&gt; "Diphasiastrum digitatum (Dill. ex A.Bra~
+$ informationWithheld           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, "Coordin~
+$ lifeStage                     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ reproductiveCondition         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ infraspecificEpithet          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ recordedByIDs.type            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ recordedByIDs.value           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ identifiedByIDs.type          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ identifiedByIDs.value         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ gadm                          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ sex                           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+$ identificationRemarks         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(GBIF_MD_research_grade)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "key"                           "scientificName"               
+ [3] "decimalLatitude"               "decimalLongitude"             
+ [5] "issues"                        "datasetKey"                   
+ [7] "publishingOrgKey"              "installationKey"              
+ [9] "publishingCountry"             "protocol"                     
+[11] "lastCrawled"                   "lastParsed"                   
+[13] "crawlId"                       "hostingOrganizationKey"       
+[15] "basisOfRecord"                 "occurrenceStatus"             
+[17] "taxonKey"                      "kingdomKey"                   
+[19] "phylumKey"                     "classKey"                     
+[21] "orderKey"                      "familyKey"                    
+[23] "genusKey"                      "speciesKey"                   
+[25] "acceptedTaxonKey"              "acceptedScientificName"       
+[27] "kingdom"                       "phylum"                       
+[29] "order"                         "family"                       
+[31] "genus"                         "species"                      
+[33] "genericName"                   "specificEpithet"              
+[35] "taxonRank"                     "taxonomicStatus"              
+[37] "iucnRedListCategory"           "dateIdentified"               
+[39] "coordinateUncertaintyInMeters" "stateProvince"                
+[41] "year"                          "month"                        
+[43] "day"                           "eventDate"                    
+[45] "modified"                      "lastInterpreted"              
+[47] "references"                    "license"                      
+[49] "identifiers"                   "facts"                        
+[51] "relations"                     "isInCluster"                  
+[53] "datasetName"                   "recordedBy"                   
+[55] "identifiedBy"                  "geodeticDatum"                
+[57] "class"                         "countryCode"                  
+[59] "recordedByIDs"                 "identifiedByIDs"              
+[61] "country"                       "rightsHolder"                 
+[63] "identifier"                    "http...unknown.org.nick"      
+[65] "verbatimEventDate"             "collectionCode"               
+[67] "gbifID"                        "verbatimLocality"             
+[69] "occurrenceID"                  "taxonID"                      
+[71] "catalogNumber"                 "institutionCode"              
+[73] "eventTime"                     "occurrenceRemarks"            
+[75] "http...unknown.org.captive"    "identificationID"             
+[77] "name"                          "informationWithheld"          
+[79] "lifeStage"                     "reproductiveCondition"        
+[81] "infraspecificEpithet"          "recordedByIDs.type"           
+[83] "recordedByIDs.value"           "identifiedByIDs.type"         
+[85] "identifiedByIDs.value"         "gadm"                         
+[87] "sex"                           "identificationRemarks"        </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter data to find all distinct species</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>MD_species <span class="ot">&lt;-</span> GBIF_MD_research_grade <span class="sc">%&gt;%</span> <span class="fu">count</span>(scientificName)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="co"># iNaturalist research-grade data has 210 unique species reported in Maryland</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>MD_classcount <span class="ot">&lt;-</span> GBIF_MD_research_grade <span class="sc">%&gt;%</span> <span class="fu">count</span>(class)</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 24 unique biological classes are reported in the data</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Highest number of observations per class is reported in Aves (birds) at 286 observations.</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>MD_unique_birds <span class="ot">&lt;-</span> GBIF_MD_research_grade <span class="sc">%&gt;%</span></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(genus) <span class="sc">%&gt;%</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">"Aves"</span>)</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>MD_unique_birds_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(MD_unique_birds, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"decimalLongitude"</span>, <span class="st">"decimalLatitude"</span>), <span class="at">crs =</span> <span class="fu">st_crs</span>(<span class="dv">4269</span>))</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Of the 286 bird observations, 84 unique species have been reported in this dataset.</span></span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>MD_unique_birds_bar <span class="ot">&lt;-</span></span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>    MD_unique_birds_sf,</span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> species)</span>
+<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-22"><a href="#cb59-22" aria-hidden="true" tabindex="-1"></a>MD_unique_birds_bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="project-documentation_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: Consider using knitr::kable() or gt::gt() to create tables based on these counts - see the example below</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">FIXME</span><span class="co">: Did you intend to add a count() function before arrange()? This is currently returning an error.</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># MD_unique_birds %&gt;%</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   arrange(desc(n)) %&gt;%</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   knitr::kable()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="comparative-exploration" class="level2">
+<h2 class="anchored" data-anchor-id="comparative-exploration">Comparative Exploration</h2>
+<p>Now that we have learned a bit about the extent of iNaturalist data that has been reported to be research-grade, we can start to explore how publicly obtained observations in the state of Maryland compare to more strategic methods of collecting biological data.</p>
+<p>Data obtained through the means of ecological surveys are conducted for two basic reasons–to determine the biological health of a habitat and to inform better decision-making for action plans.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

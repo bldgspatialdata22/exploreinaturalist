@@ -143,10 +143,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.qmd">Home</a>
+    <a class="nav-link" href="./project-documentation.html">Project Documentation</a>
   </li>  
-  <li class="dropdown-header">
- about.qmd</li>
+  <li class="nav-item">
+    <a class="nav-link" href="./Accessing_data.html">Data Cleaning</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Data_Cleaning.html">Data Cleaning</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Data_Exploration.html">Data Exploration</a>
+  </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -232,10 +239,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>piedmont_obs <span class="ot">&lt;-</span> rinat<span class="sc">::</span><span class="fu">get_inat_obs_project</span>(<span class="st">"maryland-master-naturalist-program-piedmont-region"</span>, <span class="at">type =</span> <span class="st">"observations"</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save data to local folder</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_rds</span>(piedmont_obs, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/piedmont_obs.rds"</span>))</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Repeat for coastal project</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeat for coastal project</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>coastal_obs <span class="ot">&lt;-</span> rinat<span class="sc">::</span><span class="fu">get_inat_obs_project</span>(<span class="st">"maryland-master-naturalist-program-coastal-plain"</span>, <span class="at">type =</span> <span class="st">"observations"</span>)</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_rds</span>(coastal_obs, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/coastal_obs.rds"</span>))</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Repeat for biodiversity data</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeat for biodiversity data</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>biodiv_obs <span class="ot">&lt;-</span> rinat<span class="sc">::</span><span class="fu">get_inat_obs_project</span>(<span class="st">"biodiversity-of-maryland"</span>, <span class="at">type =</span> <span class="st">"observations"</span>)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_rds</span>(biodiv_obs, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/biodiv_obs.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -301,7 +308,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in GBIF data from csv using read_tsv()</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>GBIF_MD_research_grade_FULL <span class="ot">&lt;-</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"C:/Users/Kari/Documents/GitHub/exploreinaturalist/data/GBIF_MD_research_grade.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"data/GBIF_MD_research_grade.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
