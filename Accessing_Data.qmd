@@ -20,10 +20,9 @@ Install required packages and libraries for accessing data.
 # remotes::install_github("ropensci/rinat")
 # remotes::install_github("ropensci/rgbif")
 library(tidyverse)
+install.packages("readr") # R package to read and write data files
 library(rinat) # R package to retreive data from iNaturalist database
 library(rgbif) # R package to retreive data from GBIF database
-library(readr) # R package for reading and writing files locally
-library(spData) # R package for importing US states data
 ```
 
 ### Get iNat Project Observations

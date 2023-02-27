@@ -32,11 +32,11 @@ GBIF_sm <- readr::read_rds(here::here("data/GBIF_sm.rds"))
 GBIF_kingdoms <- readr::read_rds(here::here("data/GBIF_kingdoms.rds"))
 ```
 
-Introduction to the exploration:
-
 Data from iNaturalist projects were retrieved using r package "rinat" directly from the iNaturalist.
 
 iNaturalist data was also retrieved via the Global Biodiversity Information Facility.
+
+## Visualizing the data using ggplot:
 
 iNaturalist has multiple projects that vary by geography:
 
@@ -113,11 +113,11 @@ biodiv_researchgrade_map
 ggplot2::ggsave("biodiv_research_map.png", plot = biodiv_researchgrade_map, path = "deliverables")
 ```
 
-Can multiple projects be presented in a single map?
+### Can multiple projects be presented in a single map?
 
-Combine multiple iNaturalist project data by creating a project variable which can be used as a color indicator when mapping.
+Combine multiple iNaturalist project data by creating a project variable which can be indicated using mapping aesthetics.
 
-The \$project value will refer to the project's ID, in this case I'm using "Coastal" and "Piedmont".
+The `$project` value will refer to the project's ID, in this case I'm using "Coastal" and "Piedmont".
 
 Create a new data.frame where both coastal and piedmont projects are included by using bind_rows().
 

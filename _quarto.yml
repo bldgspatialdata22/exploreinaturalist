@@ -5,6 +5,8 @@ website:
   title: "Explore iNaturalist"
   navbar:
     left:
+      - href: project-proposal.qmd
+      - text: Project Proposal
       - href: project-documentation.qmd
         text: Project Documentation
       - href: Accessing_data.qmd
